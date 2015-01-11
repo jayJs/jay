@@ -116,10 +116,10 @@ function frontPageFunction() {
 Jay loads the whole Facebook SDK for you. Currently we use it only for authentication.  
 
 **Authentication**  
-
 isUser() provides the possibility to apply different commands to anonymous or logged-in users. isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
 
-A user is logged in if its logged in to Facebook and a user of a Facebook app (registered to run at specific URL).  
+A user is logged in if its logged in to Facebook and a user of a Facebook app.  
+(Keep in mind that Facebook apps only work if the Settings -> Site URL matches your URL).  
 ```
 function isLoggedIn() {
   $("#logInBox").hide();
@@ -202,10 +202,7 @@ I've built more then 10 MVP-s in the past and I'm still maintaining quite a numb
 After some time I've found the code getting cluttered, some things not working in some browsers and myself doing the same mistakes over and over again.  
 
 A Single Page App (SPA) architecture relying on a REST API has become my weapon of choice. The jQuery part I did not choose, this is derived from all of the clients who cannot choose their browsers. Nevertheless, a SPA architecture with jQuery can cause quite a lot of stress, especially when I try to add new features later on. To quote a former coworker - this javascript thing can become a flea circus real easy.  
-
-This architecture has two quirks:  
-You have to turn views off after using them, which feels awkward in the beginning. The upside of this is that contemporary apps do not always rely on menus, it's rather a random thing turning other random things on and off. The other quirk is that views have to be defined before the models. I've never tried defining controllers before models.  
-
+  
 The name J or Jay is a wordplay with the name jQuery.  
 I also like Jay-Z.  
 
