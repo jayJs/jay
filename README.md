@@ -26,13 +26,6 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 
 ```
 
-**Instant**  
-Facebook SDK (currently mainly used for authentication)  
-Crossroads.js - routing  
-Animate.css - css animations  
-
-
-
 **Model**  
 Set up your model according to routes
 ```
