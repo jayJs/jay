@@ -1,6 +1,33 @@
 # Jay
 jQuery MVC framework for rapid building of Single Page Applications. Instant Crossroads JS routing, FB authentication &amp; Animate.CSS
 
+**Installation**
+
+```
+bower install jay
+```
+or [download Jay from Github](https://github.com/jayJs/jay/archive/master.zip)  
+
+```
+// Add CSS to header
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
+
+// Add javascript to footer right before </body>
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/bower_components/js-signals/dist/signals.min.js"></script>
+<script src="/bower_components/hasher/dist/js/hasher.min.js"></script>
+<script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
+<script src="/bower_components/jay/jay.js"></script>
+
+```
+
+**Now What?**  
+
+
+
 **Instant**  
 Authentication via Facebook  
 Animate.css - css animations  
@@ -142,89 +169,3 @@ function frontPageFunction() {
         5. Add WYSISWG editor - perhaps this:  
         https://github.com/Voog/wysihtml  
         6. Add Google Analytics and Facebook Like + Twitter Tweet buttons for demo.  
-
-
-
-
-
-
-
-
-
-
-
-        This is an old readme, waiting to be updated:
-
-
-        Blank Express + jQuery + Animate.css + Director + Bootstrap + Moment + Gulp (livereload) + Bower + Heroku  
-        ===================
-
-
-        This is a boilerplate for starting a new Single Page Application with the components listed in the header.
-
-
-        INSTALLATION AND STARTING UP
-        ===================  
-
-        (Assuming you have everything else until node installed)  
-
-        Install npm and bower things:  
-        ```
-        npm install  
-        cd public  
-        bower install  
-        ```  
-
-        Run Gulp:  
-        ```
-        gulp  
-        ```  
-
-        Run the server:  
-        ```
-        nodemon app.js
-        ```  
-
-        Go to: http://localhost:5000/
-
-
-        INSTALLATION 2  
-
-        I've created a fancy shortcut for .bash_profile.
-        It does most of the things from INSTALLATION 1 automatically:  
-
-        ```
-        alias initio='git clone git@github.com:martinsookael/tabularasa.git .;git remote remove origin; npm install; cd public; b install;'
-
-        ```
-
-        ABOUT  
-        ===================  
-
-
-        EXPRESS:  
-        Sets up a basic http server that serves the index.html file from public folder.  
-
-        GULP:  
-        Refreshes the browser every time something is edited in public folder.  
-
-        HEROKU:  
-        There is a Heroku specific Procfile present, that starts app.js if uploaded to Heroku.  
-
-        BOWSER  
-        is configured to install everything into folder "b"  
-
-        RESPONDJS  
-        brings media queries to IE 6-8  
-
-        HTML5SHIV  
-        brings HTML5 to IE  
-
-        JQUERY + BOOTSTRAP  
-        These guys do what they've always done.  
-        As a side note - Bootstrap also does a CSS reset.  
-
-        ANIMATE.CSS  
-        Provides simple animations through CSS.
-
-        DIRECTOR
