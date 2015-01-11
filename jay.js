@@ -131,21 +131,12 @@ function route(crossroads) {
 }
 
 $(document).ready(function() {
-
-  // get all tags from HTML
+  // get all tags from HTML and assign foo = $("#foo") & bar = $(".bar")
   var allTags = document.body.getElementsByTagName('*');
-  var ids = [];
   for (var tg = 0; tg< allTags.length; tg++) {
     var tag = allTags[tg];
-    if (tag.id) {
-      ids.push(tag.id);
+    if (tag.id && tag.id != "fb-root" && tag.id != "fb_xdm_frame_http" && tag.id != "fb_xdm_frame_http" && tag.id != "facebook-jssdk") {
+      window[tag.id] = $("#"+tag.id);
     }
   }
-
-  // assign name = $("#name") & name = $(".name")
-  for (var i = 0; i < ids.length; i++) {
-    ids[i] = $("#"+ids[i]);
-    window[ids[i][0].id] = $("#"+ids[i][0].id);
-  }
-
 });
