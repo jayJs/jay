@@ -44,7 +44,7 @@ Jay relies on Bootstrap class "hidden".
 **Selectors**  
 Jay takes every class and id on your index.html and creates a variable with their name.  
 ```
-//Remember when you did:
+// Remember when you did:
 $("#hello").show();
 
 // how about
@@ -58,7 +58,7 @@ They also take an optional argument for a [animate.css](http://daneden.github.io
 $("#hello").in();   // this is exactly the same
 hello.in();         // as this
 
-hello.in("bounce")   // comes in with a  [animate.css](http://daneden.github.io/animate.css/) animation called "bounce"
+hello.in("bounce")   // comes in with a animate.css animation called "bounce"
 ```
 It's basically just a shorthand for adding / removing class "hidden" and optionally adding an animation.  
 ```
