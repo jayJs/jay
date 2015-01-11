@@ -24,10 +24,6 @@ or [download Jay from Github](https://github.com/jayJs/jay/archive/master.zip)
 
 ```
 
-**Now What?**  
-
-
-
 **Instant**  
 Authentication via Facebook  
 Animate.css - css animations  
