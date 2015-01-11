@@ -119,6 +119,17 @@ $.fn.in = function(transition) {
   });
 }
 
+function route(crossroads) {
+  //setup hasher
+  // hasher let's you know when route is changed
+  function parseHash(newHash, oldHash){
+    crossroads.parse(newHash);
+  }
+  hasher.initialized.add(parseHash); //parse initial hash
+  hasher.changed.add(parseHash); //parse hash changes
+  hasher.init(); //start listening for history change
+}
+
 $(document).ready(function() {
 
   // get all tags from HTML
