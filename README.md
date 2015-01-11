@@ -94,7 +94,7 @@ One thing that might struck odd, is that you have to hide old things before you 
 The upside of this is that contemporary apps do not always rely on menus, it's rather a random thing turning other random things on and off.
 
 **Controllers**  
-A controller function is the best place to keep all the logic functions (like "show a single post" or "show all of the posts") for this route.   This way you can keep your functions available to the relevant scope and all your logic in one place.  
+A controller function is the best place to keep all the logic functions (like "Get latest posts from database") for this route.   This way you can keep your functions available to the relevant scope and all your logic in one place.  
 
 ```
 function frontPageFunction() {
