@@ -70,7 +70,7 @@ To put this to one file:
 ```
 $(document).ready(function() {
 
-  // View come first
+  // View comes first
   var frontView = function () {
     $("#otherPage, #admin").out();
     $("#frontPage").in();
@@ -218,68 +218,68 @@ function frontPageFunction() {
       }
       });
     }
-    ```
+```
 
-    ![is the user logged in?](http://i.imgur.com/rlWjEMH.png)
+![is the user logged in?](http://i.imgur.com/rlWjEMH.png)
 
-    Client side user authentication relies on Facebook. Function isUser() provides the possibility to apply different commands to anonymous or logged-in users. Function isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
+Client side user authentication relies on Facebook. Function isUser() provides the possibility to apply different commands to anonymous or logged-in users. Function isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
 
-    ```
-    function isLoggedIn() {
-      $("#logInBox").hide();
-      $("#logOutBox").show();  
-      $("#content").append("Your user id is: " + window.userId);
-    }
+```
+function isLoggedIn() {
+  $("#logInBox").hide();
+  $("#logOutBox").show();  
+  $("#content").append("Your user id is: " + window.userId);
+}
 
-    function isNotLoggedIn() {
-      $("#logOutBox").hide();  
-      $("#logInBox").show();
-    }
+function isNotLoggedIn() {
+  $("#logOutBox").hide();  
+  $("#logInBox").show();
+}
 
-    isUser(isLoggedIn, isNotLoggedIn);  
+isUser(isLoggedIn, isNotLoggedIn);  
 
-    ```
-    OR  
-    ```
+```
+OR  
+```
 
-    isUser(function() { // logged in users
-      $("#logInBox").hide();
-      $("#logOutBox").show();  
-      $("#content").append("Your user id is: " + window.userId);
-      }, function (){ // not logged in users
-        $("#logOutBox").hide();  
-        $("#logInBox").show();
-        });  
+isUser(function() { // logged in users
+  $("#logInBox").hide();
+  $("#logOutBox").show();  
+  $("#content").append("Your user id is: " + window.userId);
+  }, function (){ // not logged in users
+    $("#logOutBox").hide();  
+    $("#logInBox").show();
+    });  
 
-        ```
-        jQuery and Bootstrap do what they usually do, momentJs provides date manipulations, and bower is used for package management. Functions in() and out() turn Bootstrap class "hidden" on and off. Giving it an animation name from animate.css - in("bounceInLeft") will decorate them with a CSS animation.
+```
+jQuery and Bootstrap do what they usually do, momentJs provides date manipulations, and bower is used for package management. Functions in() and out() turn Bootstrap class "hidden" on and off. Giving it an animation name from animate.css - in("bounceInLeft") will decorate them with a CSS animation.
 
-        ```
-        $("#frontPage").out(); // hidden
-        $("#otherPage").in(); // shown
-        ```
-        OR with animate.css animations:
-        ```
-        $("#frontPage").out(); // hidden
-        $("#otherPage").in("fadeInLeft"); // shown with animation fadeInLeft
+```
+$("#frontPage").out(); // hidden
+$("#otherPage").in(); // shown
+```
+OR with animate.css animations:
+```
+$("#frontPage").out(); // hidden
+$("#otherPage").in("fadeInLeft"); // shown with animation fadeInLeft
 
-        ```
+```
 
-        This architecture has two quirks:  
-        You have to turn views off after using them, which feels awkward in the beginning. The upside of this is that contemporary apps do not always rely on menus, it's rather a random thing turning other random things on and off. The other quirk is that views have to be defined before the models. I've never tried defining controllers before models.  
+This architecture has two quirks:  
+You have to turn views off after using them, which feels awkward in the beginning. The upside of this is that contemporary apps do not always rely on menus, it's rather a random thing turning other random things on and off. The other quirk is that views have to be defined before the models. I've never tried defining controllers before models.  
 
-        The name J or Jay is a wordplay with the name jQuery.  
-        I also like Jay-Z.  
+The name J or Jay is a wordplay with the name jQuery.  
+I also like Jay-Z.  
 
 
-        Goals for January:  
+Goals for January:  
 
-        1. Make Jay installable via bower.  
-        It needs to be figured out how to install Jay via bower so that installing all of the dependencies is understandable for all (it currently relies on jquery, bootstrap, crossroads, signals and hasher).  
-        2. Break front and backend into independent parts.  
-        The current backend would be something like Jay-NodeJs or Jay-Node  
-        3. Make a Github organisation that would host Jay & Jay-Node  
-        4. Establish a way for CRUD operations.  
-        5. Add WYSISWG editor - perhaps this:  
-        https://github.com/Voog/wysihtml  
-        6. Add Google Analytics and Facebook Like + Twitter Tweet buttons for demo.  
+1. Make Jay installable via bower.  
+It needs to be figured out how to install Jay via bower so that installing all of the dependencies is understandable for all (it currently relies on jquery, bootstrap, crossroads, signals and hasher).  
+2. Break front and backend into independent parts.  
+The current backend would be something like Jay-NodeJs or Jay-Node  
+3. Make a Github organisation that would host Jay & Jay-Node  
+4. Establish a way for CRUD operations.  
+5. Add WYSISWG editor - perhaps this:  
+https://github.com/Voog/wysihtml  
+6. Add Google Analytics and Facebook Like + Twitter Tweet buttons for demo.  
