@@ -27,11 +27,50 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 ```
 
 **Instant**  
-Authentication via Facebook  
+Facebook SDK (currently mainly used for authentication)
 Crossroads.js - routing  
 Animate.css - css animations  
 
-# Helpers  
+
+
+**Model**  
+Set up your model according to routes
+```
+crossroads.addRoute('/', frontView);
+crossroads.addRoute('/you', otherView);
+crossroads.addRoute('/admin', adminView);
+
+// start routing
+route(crossroads);
+```
+If a route is matched, a View function is called. In this example route "/" calls the frontView() function.  
+
+
+**Views**  
+The View includes information about what to turn on or off on the page and calls a Controller function.
+```
+var frontView = function () {
+  $("#otherPage, #admin").out();
+  $("#frontPage").in();
+  frontPageFunction();
+}
+```
+**Controllers**  
+A controller function is the best place to keep all the logic functions (like "show a single post" or "show all of the posts") for this route.
+
+```
+function frontPageFunction() {
+  $.ajax({
+    url: "/api/post",
+    success: function(data){
+      // do something with the data
+      },  
+      fail: function(error) {
+        // show an error
+      }
+  });
+}
+```
 
 **New selectors**  
 ```
@@ -93,6 +132,7 @@ Print alerts to the header of clients browser
 ```
 a(message) // print message as a closable alert to the top of the page for client.  
 ```
+
 
 
 **Goals:**  
