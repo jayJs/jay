@@ -87,38 +87,6 @@ function isUser (isLoggedIn, notLoggedIn) {
   }
 }
 
-$.fn.out = function(transition) {
-  return this.each(function() {
-    var elem = $( this );
-    if (transition === undefined) {
-      elem.addClass("hidden");
-    } else {
-      elem.addClass("animated " + transition).addClass("hidden");
-      elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-        elem.removeClass("animated " + transition);
-      });
-      //setTimeout(function(){ elem.removeClass("animated " + transition) }, 2000);
-    }
-    return this;
-  });
-}
-
-$.fn.in = function(transition) {
-  return this.each(function() {
-    var elem = $( this );
-    if (transition === undefined) {
-      elem.removeClass("hidden");
-    } else {
-      elem.addClass("animated " + transition).removeClass("hidden");
-      elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-        elem.removeClass("animated " + transition);
-      });
-      //setTimeout(function(){ elem.removeClass("animated " + transition) }, 2000);
-    }
-    return this;
-  });
-}
-
 function route(crossroads) {
   //setup hasher
   // hasher let's you know when route is changed
@@ -131,6 +99,39 @@ function route(crossroads) {
 }
 
 (function ( $ ) {
+
+  $.fn.out = function(transition) {
+    return this.each(function() {
+      var elem = $( this );
+      if (transition === undefined) {
+        elem.addClass("hidden");
+      } else {
+        elem.addClass("animated " + transition).addClass("hidden");
+        elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          elem.removeClass("animated " + transition);
+        });
+        //setTimeout(function(){ elem.removeClass("animated " + transition) }, 2000);
+      }
+      return this;
+    });
+  }
+
+  $.fn.in = function(transition) {
+    return this.each(function() {
+      var elem = $( this );
+      if (transition === undefined) {
+        elem.removeClass("hidden");
+      } else {
+        elem.addClass("animated " + transition).removeClass("hidden");
+        elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          elem.removeClass("animated " + transition);
+        });
+        //setTimeout(function(){ elem.removeClass("animated " + transition) }, 2000);
+      }
+      return this;
+    });
+  }
+
   // get all tags from HTML and assign foo = $("#foo") & bar = $(".bar")
   var allTags = document.body.getElementsByTagName('*');
   for (var tg = 0; tg< allTags.length; tg++) {
