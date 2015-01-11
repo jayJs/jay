@@ -25,9 +25,11 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
 <script src="/bower_components/jay/jay.js"></script>
 ```
-Go to bower_components/jay/jay.js and change your user ID
+Put your fbAppId into <html> <head> like this
 ```
-var fbAppId = "756437764450452"
+<script>
+  var fbAppId = "756437764450452"
+</script>
 ```
 
 **jQuery**  

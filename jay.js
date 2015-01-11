@@ -5,9 +5,6 @@ if (window.location.hash && window.location.hash == '#_=_') {
 
 window.fbAsyncInit = function() {
 
-  // test account for jay, works on localhost:5000
-  var fbAppId = "756437764450452"
-
   FB.init({
     appId      : fbAppId,
     xfbml      : true,
