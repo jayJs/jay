@@ -1,6 +1,6 @@
 // hello hello, facebook connect and #_=_
 if (window.location.hash && window.location.hash == '#_=_') {
-  window.location.hash = '/admin';
+  window.location.hash = '/';
 }
 
 window.fbAsyncInit = function() {

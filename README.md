@@ -6,7 +6,9 @@ jQuery MVC framework for rapid building of Single Page Applications. Instant Cro
 ```
 bower install jay
 ```
-or [download Jay from Github](https://github.com/jayJs/jay/archive/master.zip)  
+or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstrap.com/getting-started/#download), [Hasher](https://github.com/millermedeiros/hasher/), [Crossroads](http://millermedeiros.github.io/crossroads.js/) and
+[download Jay ](https://github.com/jayJs/jay/archive/master.zip)  
+
 
 ```
 // Add CSS to header
@@ -26,24 +28,70 @@ or [download Jay from Github](https://github.com/jayJs/jay/archive/master.zip)
 
 **Instant**  
 Authentication via Facebook  
-Animate.css - css animations  
 Crossroads.js - routing  
+Animate.css - css animations  
 
-**Helpers**  
+# Helpers  
 
-isUser(isLoggedIn, isNotLoggedIn) - determine, if user is logged in  
-in(transition) - show an element (with a possible animate.css transition).  
-out(transition) - hide an element (with a possible animate.css transition).  
-cl(message) - shortcut for console.log(message);  
-l(message) - print message to the #log  
-a(message) - print message as an alert to the top of the page for client.  
+**New selectors**  
+```
+//This is how you would usually do it with jQuery
+$("#navigation").show();  
+$(".tabs").hide();  
+
+//This is how you can do it with Jay.
+navigation.show();
+tabs.hide();
+```
+
+** show() & hide() are now in() & out()**  
+Jay relies on Bootstrap class "hidden" to show and hide elements.  
+For example in() removes class "hidden" and adds (+ removes) an optional animation.  
+```
+navigation.in(); // show div with a class or id navigation  
+navigation.out('fadeOutLeft'); // hide div with a class or id navigation with animate.css "fadeOutLeft" animation.  
+```
+
+** isUser()**  
+Helps you to make sure, if the user is logged in (to Facebook) or not and act accordingly.
+```
+function isLoggedIn() {
+  $("#logInBox").hide();
+  $("#logOutBox").show();  
+  $("#content").append("Your user id is: " + window.userId);
+}
+
+function isNotLoggedIn() {
+  $("#logOutBox").hide();  
+  $("#logInBox").show();
+}
+
+isUser(isLoggedIn, isNotLoggedIn);  
 
 ```
-//This is how you usually do it
-$("#navigation").out();  
+OR  
+```
 
-//This is how you can do it in Jay.
-navigation.out();
+isUser(function() { // logged in users
+  $("#logInBox").hide();
+  $("#logOutBox").show();  
+  $("#content").append("Your user id is: " + window.userId);
+  }, function (){ // not logged in users
+    $("#logOutBox").hide();  
+    $("#logInBox").show();
+    });  
+
+```
+** cl(message)**  
+A shortcut for console.log(message);
+```
+console.log(message); // this logs the message to the console
+cl(message); // this does exactly the same thing
+```
+** a(message)**  
+Print alerts to the header of clients browser
+```
+a(message) // print message as a closable alert to the top of the page for client.  
 ```
 
 
