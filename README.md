@@ -50,22 +50,23 @@ $("#hello").show();
 hello.show();
 ```
 
-in() & out()  
+**in() & out()**  
 For showing and hiding elements, we have in() & out().
 They also take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.
 ```
 $("#hello").in();   // this is exactly the same
-hello.in();            // as this
+hello.in();         // as this
 
 hello.in("bounce")   // comes in with a  [animate.css](http://daneden.github.io/animate.css/) animation called "bounce"
 ```
 It's basically just a shorthand for adding / removing class "hidden" and optionally adding an animation.  
 ```
-$("#loading").addClass("animated fadeOut").addClass("hidden"); // this is the same
-loading.out('fadeOut'); // as this
+// both do the same thing:
+$("#loading").addClass("animated fadeOut").addClass("hidden");
+loading.out('fadeOut');
 ```
 
-Model: Routing  
+**Model: Routing**  
 To fetch data from URL we use routing from Crossroads JS.  
 If a route is matched, a View function is called.
 ```
@@ -77,7 +78,7 @@ crossroads.addRoute('/admin', adminPageView);
 route(crossroads);
 ```
 
-Views  
+**Views**  
 The View includes information about what to turn on or off on the page and calls a Controller function.  
 Views have to be declared before Models.  
 ```
@@ -91,13 +92,13 @@ var frontPageView = function () {
 One thing that might struck odd, is that you have to hide old things before you can show new things.  
 The upside of this is that contemporary apps do not always rely on menus, it's rather a random thing turning other random things on and off.
 
-Controllers  
+**Controllers**  
 A controller function is the best place to keep all the logic functions (like "show a single post" or "show all of the posts") for this route.   This way you can keep your functions available to the relevant scope and all your logic in one place.  
 
 ```
 function frontPageFunction() {
   $.ajax({
-    url: "/api/post",
+    url: "/api/posts",
     success: function(data){
       // do something with the data
       },  
@@ -108,13 +109,14 @@ function frontPageFunction() {
   }
 ```
 
+![is the user logged in?](http://i.imgur.com/rlWjEMH.png)  
+
 **Facebook SDK**  
 Jay loads the whole Facebook SDK for you. Currently we use it only for authentication.  
 
 **Authentication**  
-![is the user logged in?](http://i.imgur.com/rlWjEMH.png)  
 
-Client side user authentication relies on Facebook. isUser() provides the possibility to apply different commands to anonymous or logged-in users. Function isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
+isUser() provides the possibility to apply different commands to anonymous or logged-in users. isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
 
 A user is logged in if its logged in to Facebook and a user of a Facebook app (registered to run at specific URL).  
 ```
@@ -181,7 +183,7 @@ $(document).ready(function() {
   // and then controllers
   function frontPageFunction() {
     $.ajax({
-      url: "/api/post",
+      url: "/api/posts",
       success: function(data){
         // do something with the data
         },  
@@ -209,11 +211,11 @@ I also like Jay-Z.
 
 Goals for January:  
 
-1. Make Jay installable via bower.  
+1. Make Jay installable via bower.  **done**  
 It needs to be figured out how to install Jay via bower so that installing all of the dependencies is understandable for all (it currently relies on jquery, bootstrap, crossroads, signals and hasher).  
 2. Break front and backend into independent parts.  
-The current backend would be something like Jay-NodeJs or Jay-Node  
-3. Make a Github organisation that would host Jay & Jay-Node  
+The current backend would be something like Jay-NodeJs or Jay-Node  **done**  
+3. Make a Github organisation that would host Jay & Jay-Node  **done**
 4. Establish a way for CRUD operations.  
 5. Add WYSISWG editor - perhaps this:  
 https://github.com/Voog/wysihtml  
