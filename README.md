@@ -58,7 +58,7 @@ They also take an optional argument for a [animate.css](http://daneden.github.io
 $("#hello").in();   // this is exactly the same
 hello.in();         // as this
 
-hello.in("bounce")   // comes in with a animate.css animation called "bounce"
+hello.in("bounce")   // comes in with animate.css animation called "bounce"
 ```
 It's basically just a shorthand for adding / removing class "hidden" and optionally adding an animation.  
 ```
