@@ -27,7 +27,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 ```
 
 **Instant**  
-Facebook SDK (currently mainly used for authentication)
+Facebook SDK (currently mainly used for authentication)  
 Crossroads.js - routing  
 Animate.css - css animations  
 
@@ -72,6 +72,43 @@ function frontPageFunction() {
 }
 ```
 
+To put this to one file:  
+
+```
+$(document).ready(function() {
+
+  // View come first
+  var frontView = function () {
+    $("#otherPage, #admin").out();
+    $("#frontPage").in();
+    frontPageFunction();
+  }
+
+  // Then the models
+  crossroads.addRoute('/', frontView);
+  crossroads.addRoute('/you', otherView);
+  crossroads.addRoute('/admin', adminView);
+
+  // start routing
+  route(crossroads);
+
+  // and then controllers
+  function frontPageFunction() {
+    $.ajax({
+      url: "/api/post",
+      success: function(data){
+      // do something with the data
+      },  
+      fail: function(error) {
+        // show an error
+      }
+    });
+  }
+});
+
+```
+
+
 **New selectors**  
 ```
 //This is how you would usually do it with jQuery
@@ -83,7 +120,7 @@ navigation.show();
 tabs.hide();
 ```
 
-**show() & hide() are now in() & out()**  
+**in() & out()**  
 Jay relies on Bootstrap class "hidden" to show and hide elements.  
 For example in() removes class "hidden" and adds (+ removes) an optional animation.  
 ```
