@@ -202,7 +202,7 @@ I've built more then 10 MVP-s in the past and I'm still maintaining quite a numb
 After some time I've found the code getting cluttered, some things not working in some browsers and myself doing the same mistakes over and over again.  
 
 A Single Page App (SPA) architecture relying on a REST API has become my weapon of choice. The jQuery part I did not choose, this is derived from all of the clients who cannot choose their browsers. Nevertheless, a SPA architecture with jQuery can cause quite a lot of stress, especially when I try to add new features later on. To quote a former coworker - this javascript thing can become a flea circus real easy.  
-  
+
 The name J or Jay is a wordplay with the name jQuery.  
 I also like Jay-Z.  
 
@@ -211,8 +211,8 @@ Goals for January:
 
 1. Make Jay installable via bower.  **done**  
 It needs to be figured out how to install Jay via bower so that installing all of the dependencies is understandable for all (it currently relies on jquery, bootstrap, crossroads, signals and hasher).  
-2. Break front and backend into independent parts.  
-The current backend would be something like Jay-NodeJs or Jay-Node  **done**  
+2. Break front and backend into independent parts.   **done**  
+The current backend would be something like Jay-NodeJs or Jay-Node  
 3. Make a Github organisation that would host Jay & Jay-Node  **done**
 4. Establish a way for CRUD operations.  
 5. Add WYSISWG editor - perhaps this:  
