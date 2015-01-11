@@ -7,7 +7,7 @@ jQuery MVC framework for rapid building of Single Page Applications. Instant Cro
 bower install jay
 ```
 or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstrap.com/getting-started/#download), [Hasher](https://github.com/millermedeiros/hasher/), [Crossroads](http://millermedeiros.github.io/crossroads.js/) and
-[download Jay ](https://github.com/jayJs/jay/archive/master.zip)  
+[Jay](https://github.com/jayJs/jay/archive/master.zip)  
 
 
 ```
@@ -44,7 +44,7 @@ navigation.show();
 tabs.hide();
 ```
 
-** show() & hide() are now in() & out()**  
+**show() & hide() are now in() & out()**  
 Jay relies on Bootstrap class "hidden" to show and hide elements.  
 For example in() removes class "hidden" and adds (+ removes) an optional animation.  
 ```
@@ -52,7 +52,7 @@ navigation.in(); // show div with a class or id navigation
 navigation.out('fadeOutLeft'); // hide div with a class or id navigation with animate.css "fadeOutLeft" animation.  
 ```
 
-** isUser()**  
+**isUser()**  
 Helps you to make sure, if the user is logged in (to Facebook) or not and act accordingly.
 ```
 function isLoggedIn() {
@@ -82,13 +82,13 @@ isUser(function() { // logged in users
     });  
 
 ```
-** cl(message)**  
+**cl(message)**  
 A shortcut for console.log(message);
 ```
 console.log(message); // this logs the message to the console
 cl(message); // this does exactly the same thing
 ```
-** a(message)**  
+**a(message)**  
 Print alerts to the header of clients browser
 ```
 a(message) // print message as a closable alert to the top of the page for client.  
