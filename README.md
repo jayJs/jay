@@ -17,7 +17,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
 
-// Add javascript to footer right before </body>
+// Add javascript right to the end of file before the closing </body> tag
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/js-signals/dist/signals.min.js"></script>
@@ -34,7 +34,8 @@ var fbAppId = "756437764450452"
 Jay is a shorthand for jQuery. You can safely use all of jQuery in Jay.  
 
 **Templating**  
-You put all design templates into one index.html file and hide them.
+Put all design templates into one index.html file and make them invisible.  
+Jay relies on Bootstrap class "hidden".
 ```
 <div id="frontPageView" class="hidden"></div>
 <div id="otherPageView" class="hidden"></div>
