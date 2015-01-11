@@ -130,7 +130,7 @@ function route(crossroads) {
   hasher.init(); //start listening for history change
 }
 
-$(document).ready(function() {
+(function ( $ ) {
   // get all tags from HTML and assign foo = $("#foo") & bar = $(".bar")
   var allTags = document.body.getElementsByTagName('*');
   for (var tg = 0; tg< allTags.length; tg++) {
@@ -139,4 +139,4 @@ $(document).ready(function() {
       window[tag.id] = $("#"+tag.id);
     }
   }
-});
+}( jQuery ));
