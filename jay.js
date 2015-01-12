@@ -43,13 +43,6 @@ function a(message) {
   document.getElementById('alert').classList.remove("hidden");
 }
 
-// shortcut for log to #log
-function l(data) {
-  var log = document.getElementById('log');
-  log.innerHTML = log.innerHTML + data+"<br />";
-  log.scrollTop = log.scrollHeight;
-}
-
 function isUser (isLoggedIn, notLoggedIn) {
   // if it's a user
   if(window.userId != undefined && window.userId != false) {
