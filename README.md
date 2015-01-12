@@ -25,7 +25,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
 <script src="/bower_components/jay/jay.js"></script>
 ```
-Put your fbAppId into <html> <head> like this
+Put your fbAppId into html head like this
 ```
 <script>
   var fbAppId = "756437764450452"
