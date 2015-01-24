@@ -161,7 +161,7 @@ Jay features a wrapper for common AJAX REST API calls.
 
 The calls are asynchronous and can be chained with .then().  
 
-**Warning**
+**Warning**  
 Without data modelling you can't guarantee data consistency and you will limit your test coverage.  
 Nevertheless you will prototype much quicker.  
 
