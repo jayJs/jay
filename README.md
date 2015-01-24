@@ -153,7 +153,7 @@ isUser(function() { // logged in users
 
 ```
 
-##CRUD (experimental - requires [node-jay]:https://github.com/jayJs/node-jay )  
+##CRUD (experimental - requires [node-jay](https://github.com/jayJs/node-jay) )  
 Jay features a wrapper for common AJAX REST API calls.  
 **post(table, data)** -  add a row to database.  
 **get(table,objectId)** - get a row from database.  
