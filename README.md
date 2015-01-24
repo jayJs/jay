@@ -153,6 +153,91 @@ isUser(function() { // logged in users
 
 ```
 
+##CRUD REST API
+You can seda any data to the data table.  
+Every posted entry get's an objectId and if queried returns the same object that was sent to him.
+* you can send any data
+* the data is not modeled in any way.
+* all of the form fields posted will be saved and associated with an objectId.
+* if queried, the API returns exactly what was sent to him.
+* You can create required fields to front end with libraries like Parsley.
+
+
+##post(formId,table) - Save data to database.  
+formId - id of form, where the data comes (*string*).  
+table - name of the table for saving this data (*string*).  
+
+HTML  
+```
+<form id="addPostForm">
+  <p>
+    <label for="title">The title</label><br />
+    <input id="title" type="text" class="form-control" /><br />
+  </p>
+  <p>
+    <label for="content">Please write something</label><br />
+    <textarea id="content" type="text" class="form-control"></textarea><br />
+  </p>
+  <input id="addPostSubmit" class="btn button" type="submit">
+</form>
+
+```
+From input or textarea id is saved for key.  
+The value user inserts will be saved as value.  
+The value of label will be saved to variable *titles* (input and label have to be connected via "for" attribute in label).  
+
+Javascript  
+```
+addPostForm.on("submit", function() {
+  post('addPostForm','Posts');
+})
+
+```
+On submitting the form "addPostForm" the contents will be saved to table "Posts".  
+
+
+##get(table,objectId) - get data from database.  
+table - name of the table in database (*string*).  
+objectId - Id of object in database (*string*).
+
+```
+get("Posts", "378QWha5OB").then(function(data) {
+  console.log(data);
+}
+```
+would return
+```
+{
+  objectId: "378QWha5OB",
+  title: "What the user submitted",
+  content: "What the user submitted",
+  updatedAt: "2015-01-24T13:53:38.498Z",
+  createdAt: "2015-01-24T13:53:37.745Z",
+  titles: {
+    content: "Please write something",
+    title: "The title"
+  }
+}
+```
+
+##put(table, objectId, data)  
+table - name of the table in database (*string*).  
+objectId - Id of object in database (*string*).  
+data - the data to be changed (*object*)  
+
+```
+var update = {
+  title: "Let me change your title, Sir"
+}
+put("Posts", "378QWha5OB", update).then(function(data) {
+  cl(data.updatedAt);
+});
+```
+Would find objectId "378QWha5OB" and change the value under the key "title" to "Let me change your title, Sir".
+
+
+##Helpers
+
 ##cl(message)  
 A shortcut for console.log(message);  
 ```
