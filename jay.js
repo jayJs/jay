@@ -104,7 +104,7 @@ function route(crossroads) {
 
 
 // define post();
-function post(formName, tableName) {
+function post(tableName, formName) {
 
   var fd = new FormData();
   var titles = {};

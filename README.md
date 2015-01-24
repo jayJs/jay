@@ -160,10 +160,10 @@ Every posted entry get's an objectId and if queried returns the same object that
 * the data is not modeled in any way.
 * all of the form fields posted will be saved and associated with an objectId.
 * if queried, the API returns exactly what was sent to him.
-* You can create required fields to front end with libraries like Parsley.
+* You can create required fields with front end with libraries like Parsley.
 
 
-##post(formId,table) - Save data to database.  
+##post(table, formId) - Save data to database.  
 formId - id of form, where the data comes (*string*).  
 table - name of the table for saving this data (*string*).  
 
