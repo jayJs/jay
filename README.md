@@ -162,7 +162,7 @@ Jay features a wrapper for common AJAX REST API calls.
 The calls are asynchronous and can be chained with .then().  
 
 ##post(table, data)  
-*Add a row to database.*  
+**Add a row to database.**  
 table - name of the table in database (*string*).  
 data - data to be saved (*FormData*).
 
@@ -278,7 +278,7 @@ Display an alert to the users.
 a("Log in failed"); // this logs the message to the console
 ```
 
-  
+
 ##Why?  
 
 I've built more then 10 MVP-s in the past and I'm still maintaining quite a number of them.  
