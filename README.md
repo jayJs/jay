@@ -261,7 +261,7 @@ HTML
 
 ```
 addPost.on("submit", function() {
-  save('addPost','Posts');  
+  save('Posts', 'addPost');  
 })
 
 ```
