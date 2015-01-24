@@ -163,7 +163,7 @@ The calls are asynchronous and can be chained with .then().
 
 ** Warning **
 Without data modelling you can't guarantee data consistency and you will limit your test coverage.  
-
+Nevertheless you will prototype much quicker.  
   
 ##post(table, data)  
 **Add a row to database.**  
