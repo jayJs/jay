@@ -103,8 +103,9 @@ function route(crossroads) {
 }
 
 
-// define post();
-function post(tableName, formName) {
+
+// define save();
+function save(table, formName) {
 
   var fd = new FormData();
   var titles = {};
@@ -133,30 +134,45 @@ function post(tableName, formName) {
       break;
     }
   });
-
   // post the contents of the form
-  $.ajax({
-    url: "/api/?table="+tableName,
-    type: 'POST',
-    processData: false,
-    contentType: false,
-    data: fd
-  })
-  .done(function(response){
-    if(response.objectId != undefined) {
+  post(table, fd).then(function(data) {
+    if(data.objectId != undefined) {
       // add titles to db via put().
-      put(tableName, response.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
-        window.location = "#/p/" + response.objectId;
+      put(table, data.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
+        window.location = "#/p/" + data.objectId;
       });
     } else {
       cl("error - object not found");
     }
-  })
-  .error(function() {
-    cl("error sending data to API");
-    a("error sending data to API");
   });
 }
+
+
+
+// define post()
+function post(table, data) {
+  return $.ajax({
+    url: "/api/?table="+table,
+    type: 'POST',
+    processData: false,
+    contentType: false,
+    data: data,
+    success: function(response){
+      if(response.objectId != undefined) {
+        cl("post done" - response.objectId);
+      } else {
+        cl("error - object not found");
+      }
+      return response;
+    },
+    error: function(error) {
+      a(error.responseText);
+      ce(error);
+      return error;
+    }
+  });
+}
+
 
 // define get()
 function get(table, id) {
