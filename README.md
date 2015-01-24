@@ -302,7 +302,7 @@ It needs to be figured out how to install Jay via bower so that installing all o
 2. Break front and backend into independent parts.   **done**  
 The current backend would be something like Jay-NodeJs or Jay-Node  
 3. Make a Github organisation that would host Jay & Jay-Node  **done**
-4. Establish a way for CRUD operations.  
+4. Establish a way for CRUD operations.  **done**  
 5. Add WYSISWG editor - perhaps this:  
 https://github.com/Voog/wysihtml  
 6. Add Google Analytics and Facebook Like + Twitter Tweet buttons for demo.  
