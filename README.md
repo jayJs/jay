@@ -153,19 +153,16 @@ isUser(function() { // logged in users
 
 ```
 
-##CRUD REST API
-You can seda any data to the data table.  
-Every posted entry get's an objectId and if queried returns the same object that was sent to him.
-* you can send any data
-* the data is not modeled in any way.
-* all of the form fields posted will be saved and associated with an objectId.
-* if queried, the API returns exactly what was sent to him.
-* You can create required fields with front end with libraries like Parsley.
+##CRUD (experimental)  
+Jay features a wrapper for common AJAX REST API calls.  
+**post(table, data)** -  add a row to database.  
+**get(table,objectId)** - get a row from database
+**put(table, objectId, data)** - update a row in database.  
 
+The calls are asynchronous and can be chained with .then().  
 
-
-
-##post(table, data) - add a row to database.  
+##post(table, data)  
+add a row to database.  
 table - name of the table in database (*string*).  
 data - data to be saved (*FormData*).
 
