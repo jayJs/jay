@@ -158,6 +158,7 @@ Jay features a wrapper for common AJAX REST API calls.
 **post(table, data)** -  add a row to database.  
 **get(table,objectId)** - get a row from database.  
 **put(table, objectId, data)** - update a row in database.  
+**save(table, formId)** - Save data data from form to database.  
 
 The calls are asynchronous and can be chained with .then().  
 
