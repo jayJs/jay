@@ -16,7 +16,7 @@ window.fbAsyncInit = function() {
     // FB logged in and this app has permissions
     if (response.status === "connected") {
       window.userId = response.authResponse.userID;
-    // not a user or not authenticated with the app
+      // not a user or not authenticated with the app
     } else {
       window.userId = false;
       //console.log(response);
@@ -37,10 +37,24 @@ function cl(data) {
   console.log(data);
 }
 
+// shortcut for console.error
+function ce(data) {
+  console.error(data);
+}
+
 // write to alert
 function a(message) {
-  document.getElementById('alertMessage').innerHTML = message;
-  document.getElementById('alert').classList.remove("hidden");
+  // find if alert exists and if it does, remove it.
+  var elem = document.getElementById("alert")
+  if(elem != null) {
+    var elemParent = elem.parentNode;
+    elemParent.removeChild("alert");
+  }
+  // create the alert HTML
+  var extra = '<div id="alert" style="z-index: 10;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div id="alertMessage" class="alert alert-danger alert-dismissible" role="alert">'+message+'</div></div>';
+  // add html to beginning of app
+  var app = document.getElementById('app');
+  app.innerHTML = extra + app.innerHTML;
 }
 
 function isUser (isLoggedIn, notLoggedIn) {
@@ -65,7 +79,7 @@ function isUser (isLoggedIn, notLoggedIn) {
           clearInterval(getStatus);
         } else {
           // FB is not yet available
-          if(i === 20) { // turn off the search after 20 times
+          if(i === 40) { // turn off the search after 40 times
             notLoggedIn();
             a('Unable to authenticate. Refresh page to try again');
             clearInterval(getStatus);
@@ -73,7 +87,7 @@ function isUser (isLoggedIn, notLoggedIn) {
           i++;
         }
       }
-    }, 100); // Ping every 100 ms
+    }, 200); // Ping every 200 ms
   }
 }
 
@@ -87,6 +101,95 @@ function route(crossroads) {
   hasher.changed.add(parseHash); //parse hash changes
   hasher.init(); //start listening for history change
 }
+
+
+// define post();
+function post(formName, tableName) {
+
+  var fd = new FormData();
+  var titles = {};
+
+  formName = $("#"+formName);
+
+  // go through form and get data
+  formName.find("input, textarea").each(function(){
+    var t = $(this);
+
+    // handle input type text, file, submit differently;
+    switch(t.attr("type")) {
+      case "text":
+      fd.append(t.attr("id"), t.val()); // add the value of the input
+      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+      break;
+
+      case "file":
+      // there should something coming here
+      break;
+
+      case "submit":
+      break;
+
+      default:
+      break;
+    }
+  });
+
+  // post the contents of the form
+  $.ajax({
+    url: "/api/?table="+tableName,
+    type: 'POST',
+    processData: false,
+    contentType: false,
+    data: fd
+  })
+  .done(function(response){
+    if(response.objectId != undefined) {
+      // add titles to db via put().
+      put(tableName, response.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
+        window.location = "#/p/" + response.objectId;
+      });
+    } else {
+      cl("error - object not found");
+    }
+  })
+  .error(function() {
+    cl("error sending data to API");
+    a("error sending data to API");
+  });
+}
+
+// define get()
+function get(table, id) {
+  return $.ajax({
+    url: "/api/?table="+table+'&id='+id,
+    success: function(data){
+      return data;
+    },
+    error: function(error) {
+      a(error.responseText);
+      ce(error);
+      return error;
+    }
+  });
+}
+
+// define put()
+function put(table, id, data) {
+  data = JSON.stringify(data);
+  return $.ajax({
+    type: 'PUT',
+    url: "/api/?table="+table+'&id='+id+'&data='+data,
+    success: function(data){
+      return data;
+    },
+    error: function(error) {
+      a(error.responseText);
+      cl(error);
+      return error;
+    }
+  });
+}
+
 
 (function ( $ ) {
 
