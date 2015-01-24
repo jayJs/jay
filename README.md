@@ -307,6 +307,38 @@ The current backend would be something like Jay-NodeJs or Jay-Node
 https://github.com/Voog/wysihtml  
 6. Add Google Analytics and Facebook Like + Twitter Tweet buttons for demo.  
 
+
+##Roadmap
+
+**0.4.3**  
+Add edit post to sample and tie it with save().  
+
+Add delete().  
+
+Unify get(), post(), put(), delete and save().  
+
+Hide then() in jay or use it constantly.
+
+Add WYSISWG editor
+https://github.com/Voog/wysihtml
+
+dee-jay or jay-one:  
+A index.html+css+js working without backend for easy learning.  
+
+Create public API service for dee-jay.  
+
+
+**0.4.4**
+Expose backend as node middleware.
+
+Make backend always serve index.html:
+( app.get("*", function ) {}
+
+sample page:
+add FB samples - like & comment.  
+Add Google Analytics sample.  
+
+
 ##Licence
 
 The MIT License (MIT)
