@@ -163,42 +163,37 @@ Every posted entry get's an objectId and if queried returns the same object that
 * You can create required fields with front end with libraries like Parsley.
 
 
-##post(table, formId) - Save data to database.  
-formId - id of form, where the data comes (*string*).  
-table - name of the table for saving this data (*string*).  
-
-HTML  
-```
-<form id="addPostForm">
-  <p>
-    <label for="title">The title</label><br />
-    <input id="title" type="text" class="form-control" /><br />
-  </p>
-  <p>
-    <label for="content">Please write something</label><br />
-    <textarea id="content" type="text" class="form-control"></textarea><br />
-  </p>
-  <input id="addPostSubmit" class="btn button" type="submit">
-</form>
-
-```
-From input or textarea id is saved for key.  
-The value user inserts will be saved as value.  
-The value of label will be saved to variable *titles* (input and label have to be connected via "for" attribute in label).  
-
-Javascript  
-```
-addPostForm.on("submit", function() {
-  post('addPostForm','Posts');
-})
-
-```
-On submitting the form "addPostForm" the contents will be saved to table "Posts".  
 
 
-##get(table,objectId) - get data from database.  
+##post(table, data) - add a row to database.  
 table - name of the table in database (*string*).  
-objectId - Id of object in database (*string*).
+data - data to be saved (*FormData*).
+
+Returns objectId of saved data.
+
+```
+var data = new FormData();
+
+var key = "title"; // if key does not exist in the table, it will be created.
+var value = "What the f*ck is FormData?"
+
+data.append(key, value); // add the value of the input
+
+post(table, data).then(function(response) {  
+  if(response.objectId != undefined) {
+    console.log("Object created: " + response.objectId);
+  }
+}
+```
+There's an easier way to achieve this with save(). Scroll a bit down.  
+
+
+##get(table,objectId)  
+**Get a row from database.**
+table - name of the table in database (*string*).
+objectId - Id of object in database (*string*).  
+
+Returns object with the data.  
 
 ```
 get("Posts", "378QWha5OB").then(function(data) {
@@ -209,7 +204,7 @@ would return
 ```
 {
   objectId: "378QWha5OB",
-  title: "What the user submitted",
+  title: "What the f*ck is FormData?",
   content: "What the user submitted",
   updatedAt: "2015-01-24T13:53:38.498Z",
   createdAt: "2015-01-24T13:53:37.745Z",
@@ -221,22 +216,57 @@ would return
 ```
 
 ##put(table, objectId, data)  
+**Update a row in database.**  
 table - name of the table in database (*string*).  
 objectId - Id of object in database (*string*).  
 data - the data to be changed (*object*)  
 
+Returns updatedAt from the update row.
+
 ```
 var update = {
-  title: "Let me change your title, Sir"
+  content: "I have IE9, I have no idea what FormData is."
 }
 put("Posts", "378QWha5OB", update).then(function(data) {
-  cl(data.updatedAt);
+  cl(data.updatedAt);  
 });
 ```
-Would find objectId "378QWha5OB" and change the value under the key "title" to "Let me change your title, Sir".
 
 
-##Helpers
+##save(table, formId)  
+**Save data data from form to database.**  
+table - name of the table to save this data (*string*).  
+formId - id of form, where the data comes (*string*).  
+
+HTML  
+```
+<form id="addPost">
+  <p>
+    <label for="title">The title</label><br />
+    <input id="title" type="text" class="form-control" /><br />
+  </p>
+  <p>
+    <label for="content">Please write something</label><br />
+    <textarea id="content" type="text" class="form-control"></textarea><br />
+  </p>
+  <input class="btn button" type="submit">
+</form>
+
+```
+**input, textarea** id - is used as key. If such key does not exist, it will be created.  
+**user input** - is saved as value.  
+**label** - if attribute "for" matches with input id, the label value is saved to *titles* array.  
+
+```
+addPost.on("submit", function() {
+  save('addPost','Posts');  
+})
+
+```
+Submitting saves contents from form with id addPost to table "Posts"
+
+
+##Helpers  
 
 ##cl(message)  
 A shortcut for console.log(message);  
@@ -244,6 +274,13 @@ A shortcut for console.log(message);
 console.log(message); // this logs the message to the console
 cl(message); // this does exactly the same thing
 ```
+
+##a(message)  
+Display an alert to the users.
+```
+a("Log in failed"); // this logs the message to the console
+```
+
 
 ##To put this all into one file
 ```
