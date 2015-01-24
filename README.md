@@ -156,13 +156,13 @@ isUser(function() { // logged in users
 ##CRUD (experimental)  
 Jay features a wrapper for common AJAX REST API calls.  
 **post(table, data)** -  add a row to database.  
-**get(table,objectId)** - get a row from database
+**get(table,objectId)** - get a row from database.  
 **put(table, objectId, data)** - update a row in database.  
 
 The calls are asynchronous and can be chained with .then().  
 
 ##post(table, data)  
-add a row to database.  
+*Add a row to database.*  
 table - name of the table in database (*string*).  
 data - data to be saved (*FormData*).
 
@@ -171,12 +171,12 @@ Returns objectId of saved data.
 ```
 var data = new FormData();
 
-var key = "title"; // if key does not exist in the table, it will be created.
+var key = "title"; // if key does not exist in the table, it will be created automatically.
 var value = "What the f*ck is FormData?"
 
 data.append(key, value); // add the value of the input
 
-post(table, data).then(function(response) {  
+post("Posts", data).then(function(response) {  
   if(response.objectId != undefined) {
     console.log("Object created: " + response.objectId);
   }
@@ -186,8 +186,8 @@ There's an easier way to achieve this with save(). Scroll a bit down.
 
 
 ##get(table,objectId)  
-**Get a row from database.**
-table - name of the table in database (*string*).
+**Get a row from database.**  
+table - name of the table in database (*string*).  
 objectId - Id of object in database (*string*).  
 
 Returns object with the data.  
@@ -250,7 +250,7 @@ HTML
 </form>
 
 ```
-**input, textarea** id - is used as key. If such key does not exist, it will be created.  
+**input, textarea** - id is used as key. If such key does not exist, it will be created.  
 **user input** - is saved as value.  
 **label** - if attribute "for" matches with input id, the label value is saved to *titles* array.  
 
@@ -278,41 +278,7 @@ Display an alert to the users.
 a("Log in failed"); // this logs the message to the console
 ```
 
-
-##To put this all into one file
-```
-$(document).ready(function() {
-
-  // View comes first
-  var frontView = function () {
-    $("#otherPage, #admin").out();
-    $("#frontPage").in();
-    frontPageFunction();
-  }
-
-  // Then the models
-  crossroads.addRoute('/', frontView);
-  crossroads.addRoute('/you', otherView);
-  crossroads.addRoute('/admin', adminView);
-
-  // start routing
-  route(crossroads);
-
-  // and then controllers
-  function frontPageFunction() {
-    $.ajax({
-      url: "/api/posts",
-      success: function(data){
-        // do something with the data
-        },  
-      fail: function(error) {
-        // show an error
-      }
-    });
-  }
-});
-```
-
+  
 ##Why?  
 
 I've built more then 10 MVP-s in the past and I'm still maintaining quite a number of them.  
