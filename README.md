@@ -282,10 +282,10 @@ Display an alert to the users.
 ```
 a("Log in failed"); // this logs the message to the console
 ```
-  
+
 ##Compability  
-Visit the site - compatible until IE 6. We use (latest jQuery version 1.x)[http://jquery.com/browser-support/].
-Post data - compatible until IE 10. The bottleneck is (FormData)[https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility].  
+Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
+Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
 
 ##Why?  
 
