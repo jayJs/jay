@@ -161,6 +161,10 @@ Jay features a wrapper for common AJAX REST API calls.
 
 The calls are asynchronous and can be chained with .then().  
 
+** Warning **
+Without data modelling you can't guarantee data consistency and you will limit your test coverage.  
+
+  
 ##post(table, data)  
 **Add a row to database.**  
 table - name of the table in database (*string*).  
