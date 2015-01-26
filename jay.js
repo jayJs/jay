@@ -106,12 +106,9 @@ function route(crossroads) {
 
 // define save();
 function save(table, formName) {
-
   var fd = new FormData();
   var titles = {};
-
   formName = $("#"+formName);
-
   // go through form and get data
   formName.find("input, textarea").each(function(){
     var t = $(this);
@@ -123,19 +120,31 @@ function save(table, formName) {
       titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
       break;
 
+      case "textarea":
+      fd.append(t.attr("id"), t.val()); // add the value of the input
+      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+      break;
+
       case "file":
-      // there should something coming here
+      fd.append(t.attr("id"), $(this)[0].files[0]); // add the value of the input
+      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
       break;
 
       case "submit":
       break;
 
       default:
+      // if it's a textarea
+      if (t.prop('tagName') === "TEXTAREA") {
+        fd.append(t.attr("id"), t.val()); // add the value of the input
+        titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+      }
       break;
     }
   });
+
   // post the contents of the form
-  post(table, fd).then(function(data) {
+  post(table, fd).then(function(data) { //cl(data);
     if(data.objectId != undefined) {
       // add titles to db via put().
       put(table, data.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
@@ -161,7 +170,7 @@ function post(table, data) {
       if(response.objectId != undefined) {
         cl("post done" - response.objectId);
       } else {
-        cl("error - object not found");
+        cl("error - object not saved");
       }
       return response;
     },

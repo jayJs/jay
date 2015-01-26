@@ -313,7 +313,7 @@ https://github.com/Voog/wysihtml
 
 ##Roadmap
 
-**0.4.3**  
+**0.4.4**  
 Add edit post to sample and tie it with save().  
 
 Add delete().  
@@ -331,7 +331,7 @@ A index.html+css+js working without backend for easy learning.
 Create public API service for dee-jay.  
 
 
-**0.4.4**
+**0.4.5**
 Expose backend as node middleware.
 
 Make backend always serve index.html:
