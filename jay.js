@@ -102,8 +102,6 @@ function route(crossroads) {
   hasher.init(); //start listening for history change
 }
 
-
-
 // define save();
 function save(table, formName) {
   var fd = new FormData();
@@ -144,15 +142,9 @@ function save(table, formName) {
   });
 
   // post the contents of the form
-  post(table, fd).then(function(data) { //cl(data);
-    if(data.objectId != undefined) {
-      // add titles to db via put().
-      put(table, data.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
-        window.location = "#/p/" + data.objectId;
-      });
-    } else {
-      cl("error - object not found");
-    }
+  return post(table, fd).then(function(data){
+    put(table, data.objectId, {titles: titles});
+    return data;
   });
 }
 
