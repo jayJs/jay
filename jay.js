@@ -104,6 +104,10 @@ function route(crossroads) {
 
 // define save();
 function save(table, formName) {
+
+  // added progress bar
+  $("body").append('<div style="position: absolute; color: #fff; padding-top: 15px; bottom: 20px; height: 50px; background: #000; opacity: 0.3; width: 0%; text-align: center" id="progress">Upload in progress: <span id="processPercent">45%</span></div>');
+
   var fd = new FormData();
   var titles = {};
   formName = $("#"+formName);
@@ -141,14 +145,40 @@ function save(table, formName) {
     }
   });
 
+  // prevent double submit
+  formName.find("input:submit").each(function(){
+    $(this).prop('disabled', true);
+  });
+
   // post the contents of the form
-  return post(table, fd).then(function(data){
-    put(table, data.objectId, {titles: titles});
-    return data;
+  post(table, fd).then(function(data) { //cl(data);
+    if(data.objectId != undefined) {
+      // add titles to db via put().
+      put(table, data.objectId, {titles: titles} ).then(function(data2) { // this is data2, since we use the data from the post()
+        window.location = "#/p/" + data.objectId;
+      });
+    } else {
+      cl("error - object not found");
+    }
+
+    // make submit active again
+    formName.find("input:submit").each(function(){
+      $(this).prop('disabled', false);
+    });
   });
 }
 
-
+// handle info coming from upload progress
+function progressHandlingFunction(e){
+  if(e.lengthComputable){
+    var percent= e.loaded/e.total*100;
+    $("#progress").css("width", percent+"%");
+    $("#processPercent").empty().append(percent+"%");
+    if(percent === 100) {
+      $("#progress").css("width", "0%");
+    }
+  }
+}
 
 // define post()
 function post(table, data) {
@@ -165,6 +195,13 @@ function post(table, data) {
         cl("error - object not saved");
       }
       return response;
+    },
+    xhr: function() {  // Custom XMLHttpRequest
+      var myXhr = $.ajaxSettings.xhr();
+      if(myXhr.upload){ // Check if upload property exists
+        myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
+      }
+      return myXhr;
     },
     error: function(error) {
       a(error.responseText);
