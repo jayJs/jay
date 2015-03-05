@@ -3,34 +3,36 @@ if (window.location.hash && window.location.hash == '#_=_') {
   window.location.hash = '/';
 }
 
-window.fbAsyncInit = function() {
+if (typeof fbAppId != "undefined") {
+  window.fbAsyncInit = function() {
 
-  FB.init({
-    appId      : fbAppId,
-    xfbml      : true,
-    version    : 'v2.2',
-    status     : true
-  });
+    FB.init({
+      appId      : fbAppId,
+      xfbml      : true,
+      version    : 'v2.2',
+      status     : true
+    });
 
-  FB.getLoginStatus(function(response){
-    // FB logged in and this app has permissions
-    if (response.status === "connected") {
-      window.userId = response.authResponse.userID;
-      // not a user or not authenticated with the app
-    } else {
-      window.userId = false;
-      //console.log(response);
-    }
-  });
-};
+    FB.getLoginStatus(function(response){
+      // FB logged in and this app has permissions
+      if (response.status === "connected") {
+        window.userId = response.authResponse.userID;
+        // not a user or not authenticated with the app
+      } else {
+        window.userId = false;
+        //console.log(response);
+      }
+    });
+  };
 
-(function(d, s, id){
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "https://connect.facebook.net/en_US/all.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+}
 
 // shortcut for console.log
 function cl(data) {
