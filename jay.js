@@ -165,11 +165,11 @@ function save(table, formName) {
   // gather all checboxes to formData
   for (var i = 0; i < checkboxes.length+1; i++) {
     var inputId = checkboxes[i];
-    if(inputId) { cl(inputId);
+    if(inputId) { 
       inputId2 = inputId.replace("j_", "");
       fd.append(inputId2, window[checkboxes[i]]); // add the value of the input
       titles[inputId2] = $("label[for='"+inputId2+"']").text(); // at the label to titles array
-      window[inputId].length = 0;
+      if(window[inputId]) window[inputId].length = 0;
     }
   }
   checkboxes.length = 0;
