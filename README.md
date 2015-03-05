@@ -247,7 +247,37 @@ put("Posts", "378QWha5OB", update).then(function(data) {
 table - name of the table to save this data (*string*).  
 formId - id of form, where the data comes (*string*).  
 
-Save also disables all <input type="submit"> type elements in the form and shows an upload progress in the bottom of the screen.  
+Save also disables all <input type="submit"> type elements in the form and shows an upload progress in the bottom of the screen.
+
+HTML:
+```
+<form id="addNgoForm">
+  <p>
+    <label for="addNgoName">Name:</label><br />
+    <input id="addNgoName" type="text" class="form-control" /><br />
+  </p>
+  <p>
+    <label for="addNgoType">Type:</label><br />
+    <label><input type="checkbox" name="addNgoType" value="1">Apples</label><br>
+    <label><input type="checkbox" name="addNgoType" value="2">Oranges</label><br>
+    <label><input type="checkbox" name="addNgoType" value="3">Grapes</label><br>
+  </p>
+</form>
+```
+JS:
+```
+save("TableName", "addNgoForm");
+```
+Would save the contents of the form to table called TableName.  
+The table would have only three columns:
+1. one with a title "addNgoName"
+2. Second with a title "addNgoType", user selection as array.
+3. Last for metadata. It's currently saved to column called "titles".
+With the above sample form it would save this:
+```
+{"addNgoName":"Name:", "addNgoType":"Type:"}
+```
+  
 
 HTML  
 ```

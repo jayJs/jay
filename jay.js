@@ -107,6 +107,8 @@ function route(crossroads) {
 // define save();
 function save(table, formName) {
 
+  var checkboxes = [];
+
   // added progress bar
   $("body").append('<div style="position: absolute; color: #fff; padding-top: 15px; bottom: 20px; height: 50px; background: #000; opacity: 0.3; width: 0%; text-align: center" id="progress">Upload in progress: <span id="processPercent">45%</span></div>');
 
@@ -134,6 +136,19 @@ function save(table, formName) {
       titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
       break;
 
+      case "checkbox":
+      case "radio":
+      if(t.prop("checked")) {
+        if(typeof window["j_" + t.attr("name")] === "undefined") { // if array does not exist, create it
+          window["j_" + t.attr("name")] = [];
+        }
+        window["j_" + t.attr("name")].push(t.attr("value")); // add value to array
+      }
+      if($.inArray("j_" + t.attr("name"), checkboxes) == "-1") { // if array name not there yet, add it to checkboxes array
+        checkboxes.push("j_" + t.attr("name"));
+      }
+      break;
+
       case "submit":
       break;
 
@@ -146,6 +161,18 @@ function save(table, formName) {
       break;
     }
   });
+
+  // gather all checboxes to formData
+  for (var i = 0; i < checkboxes.length+1; i++) {
+    var inputId = checkboxes[i];
+    if(inputId) { cl(inputId);
+      inputId2 = inputId.replace("j_", "");
+      fd.append(inputId2, window[checkboxes[i]]); // add the value of the input
+      titles[inputId2] = $("label[for='"+inputId2+"']").text(); // at the label to titles array
+      window[inputId].length = 0;
+    }
+  }
+  checkboxes.length = 0;
 
   // post the contents of the form
   return post(table, fd).then(function(data){
