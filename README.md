@@ -282,18 +282,7 @@ Display an alert to the users.
 ```
 a("Log in failed"); // this logs the message to the console
 ```
-
-##.jGallery  
-If you create a div with class ".jGallery" all the <img>-s inside the div will be converted to a simple gallery ```
-<div class="jGallery">
-  <img src="/img/sample1.jpg" />
-  <img src="/img/sample2.jpg" />
-  <img src="/img/sample3.jpg" />
-  <img src="/img/sample4.jpg" />
-</div>
-```
-Will create a simple responsive image gallery from the attached images.  
-
+  
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
