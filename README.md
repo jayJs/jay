@@ -117,6 +117,14 @@ function frontPageFunction() {
 
 ##Authentication
 **Facebook SDK**  
+
+If fbAppId is set before Jay is loaded, the whole Facebook SDK is added to the site. You can add fbAppId like this:
+```
+<script>
+  // test account for jay, works on localhost:5000
+  var fbAppId = "756437764450452" // if fbAppId is undefined, FB SDK is not added
+</script>
+```
 Jay loads the whole Facebook SDK for you. Currently we use it only for authentication.  
 
 isUser() provides the possibility to apply different commands to anonymous or logged-in users. isUser() determines that you are logged in before executing the functions. window.userId contains the user Facebook ID.
@@ -234,11 +242,12 @@ put("Posts", "378QWha5OB", update).then(function(data) {
 });
 ```
 
-
 ##save(table, formId)  
 **Save data data from form to database.**  
 table - name of the table to save this data (*string*).  
 formId - id of form, where the data comes (*string*).  
+
+Save also disables all <input type="submit"> type elements in the form and shows an upload progress in the bottom of the screen.  
 
 HTML  
 ```
@@ -282,7 +291,7 @@ Display an alert to the users.
 ```
 a("Log in failed"); // this logs the message to the console
 ```
-  
+
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
@@ -322,7 +331,7 @@ Unify get(), post(), put(), delete and save().
 
 Hide then() in jay or use it constantly.
 
-Add WYSISWG editor
+Add WYSISWG editor - OK
 https://github.com/Voog/wysihtml
 
 dee-jay or jay-one:  
