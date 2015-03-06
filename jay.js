@@ -142,7 +142,7 @@ function save(table, formName) {
         if(typeof window["j_" + t.attr("name")] === "undefined") { // if array does not exist, create it
           window["j_" + t.attr("name")] = [];
         }
-        window["j_" + t.attr("name")].push(t.attr("value")); // add value to array
+        window["j_" + t.attr("name")][t.attr("value")] = $("label[for='"+t.attr("name")+"']").text();
       }
       if($.inArray("j_" + t.attr("name"), checkboxes) == "-1") { // if array name not there yet, add it to checkboxes array
         checkboxes.push("j_" + t.attr("name"));
@@ -167,13 +167,16 @@ function save(table, formName) {
     var inputId = checkboxes[i];
     if(inputId) {
       inputId2 = inputId.replace("j_", "");
-      fd.append(inputId2, window[checkboxes[i]]); // add the value of the input
+      var theData = window[checkboxes[i]];
+      theData = JSON.stringify(theData);
+      fd.append(inputId2, theData); // add the value of the input
       titles[inputId2] = $("label[for='"+inputId2+"']").text(); // at the label to titles array
       if(window[inputId]) window[inputId].length = 0;
     }
   }
   checkboxes.length = 0;
 
+  titles = JSON.stringify(titles);
   fd.append("titles", titles); // add titles to fd
 
   // post the contents of the form
@@ -207,6 +210,7 @@ function post(table, data) {
         cl("post done" - response.objectId);
       } else {
         cl("error - object not saved");
+        cl(response);
       }
       return response;
     },
@@ -231,6 +235,15 @@ function get(table, id) {
   return $.ajax({
     url: "/api/?table="+table+'&id='+id,
     success: function(data){
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          if(data[key].charAt(0) === "{"){
+            var newData = data[key];
+            newData = JSON.parse(newData);
+            data[key] = newData;
+          }
+        }
+      }
       return data;
     },
     error: function(error) {
