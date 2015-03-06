@@ -140,7 +140,7 @@ function save(table, formName) {
       case "radio":
       if(t.prop("checked")) {
         if(typeof window["j_" + t.attr("name")] === "undefined") { // if array does not exist, create it
-          window["j_" + t.attr("name")] = [];
+          window["j_" + t.attr("name")] = {};
         }
         window["j_" + t.attr("name")][t.attr("value")] = $("label[for='"+t.attr("name")+"']").text();
       }
