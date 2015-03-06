@@ -165,7 +165,7 @@ function save(table, formName) {
   // gather all checboxes to formData
   for (var i = 0; i < checkboxes.length+1; i++) {
     var inputId = checkboxes[i];
-    if(inputId) { 
+    if(inputId) {
       inputId2 = inputId.replace("j_", "");
       fd.append(inputId2, window[checkboxes[i]]); // add the value of the input
       titles[inputId2] = $("label[for='"+inputId2+"']").text(); // at the label to titles array
@@ -174,9 +174,10 @@ function save(table, formName) {
   }
   checkboxes.length = 0;
 
+  fd.append("titles", titles); // add titles to fd
+
   // post the contents of the form
   return post(table, fd).then(function(data){
-    put(table, data.objectId, {titles: titles});
     return data;
   });
 }
