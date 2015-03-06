@@ -142,7 +142,7 @@ function save(table, formName) {
         if(typeof window["j_" + t.attr("name")] === "undefined") { // if array does not exist, create it
           window["j_" + t.attr("name")] = {};
         }
-        window["j_" + t.attr("name")][t.attr("value")] = $("label[for='"+t.attr("name")+"']").text();
+        window["j_" + t.attr("name")][t.attr("value")] = t.parent().text();
       }
       if($.inArray("j_" + t.attr("name"), checkboxes) == "-1") { // if array name not there yet, add it to checkboxes array
         checkboxes.push("j_" + t.attr("name"));
