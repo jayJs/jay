@@ -139,13 +139,18 @@ function save(table, formName) {
       case "checkbox":
       case "radio":
       if(t.prop("checked")) {
-        if(typeof window["j_" + t.attr("name")] === "undefined") { // if array does not exist, create it
-          window["j_" + t.attr("name")] = {};
+        if(typeof window[t.attr("name") + "_meta"] === "undefined") { // if array does not exist, create it
+          window[t.attr("name") + "_meta"] = {};
         }
-        window["j_" + t.attr("name")][t.attr("value")] = t.parent().text();
+        if(typeof window[t.attr("name") + "_data"] === "undefined") { // if array does not exist, create it
+          window[t.attr("name") + "_data"] = [];
+        }
+
+        window[t.attr("name") + "_meta"][t.attr("value")] = t.parent().text();
+        window[t.attr("name") + "_data"].push(t.val());
       }
-      if($.inArray("j_" + t.attr("name"), checkboxes) == "-1") { // if array name not there yet, add it to checkboxes array
-        checkboxes.push("j_" + t.attr("name"));
+      if($.inArray(t.attr("name"), checkboxes) == "-1") { // if array name not there yet, add it to checkboxes array
+        checkboxes.push(t.attr("name"));
       }
       break;
 
@@ -166,11 +171,12 @@ function save(table, formName) {
   for (var i = 0; i < checkboxes.length+1; i++) {
     var inputId = checkboxes[i];
     if(inputId) {
-      inputId2 = inputId.replace("j_", "");
-      var theData = window[checkboxes[i]];
-      theData = JSON.stringify(theData);
-      fd.append(inputId2, theData); // add the value of the input
-      titles[inputId2] = $("label[for='"+inputId2+"']").text(); // at the label to titles array
+      var metaData = window[checkboxes[i]+"_meta"];
+      var theData = window[checkboxes[i]+"_data"];
+      metaData = JSON.stringify(metaData);
+      fd.append(inputId+"_meta", metaData); // add the value of the input
+      fd.append(inputId, theData); // add the value of the input
+      titles[inputId] = $("label[for='"+inputId+"']").text(); // at the label to titles array
       if(window[inputId]) window[inputId].length = 0;
     }
   }
