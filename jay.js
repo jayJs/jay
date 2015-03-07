@@ -237,19 +237,10 @@ function post(table, data) {
 
 
 // define get()
-function get(table, id) {
+function get(table, limit, id) {
   return $.ajax({
-    url: "/api/?table="+table+'&id='+id,
+    url: "/api/?table="+table+'&id='+id+'&limit='+limit,
     success: function(data){
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          if(data[key].charAt(0) === "{"){
-            var newData = data[key];
-            newData = JSON.parse(newData);
-            data[key] = newData;
-          }
-        }
-      }
       return data;
     },
     error: function(error) {
