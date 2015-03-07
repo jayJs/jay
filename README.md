@@ -198,9 +198,10 @@ post("Posts", data).then(function(response) {
 There's an easier way to achieve this with save(). Scroll a bit down.  
 
 
-##get(table,objectId)  
+##get(table, limit, objectId)  
 **Get a row from database.**  
 table - name of the table in database (*string*).  
+limit - if limit is 1, objectId will be use the get the precise object. In any other case the last posts from the table will be retrieved.  
 objectId - Id of object in database (*string*).  
 
 Returns object with the data.  
@@ -277,7 +278,7 @@ With the above sample form it would save this:
 ```
 {"addNgoName":"Name:", "addNgoType":"Type:"}
 ```
-  
+
 
 HTML  
 ```
