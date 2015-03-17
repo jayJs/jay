@@ -104,16 +104,17 @@ function route(crossroads) {
   hasher.init(); //start listening for history change
 }
 
-// define save();
-function save(table, formName) {
+function prepareForm(formName) {
 
   var checkboxes = [];
-
+//cl("a")
   // added progress bar
   $("body").append('<div style="position: absolute; color: #fff; padding-top: 15px; bottom: 20px; height: 50px; background: #000; opacity: 0.3; width: 0%; text-align: center" id="progress">Upload in progress: <span id="processPercent">45%</span></div>');
 
+
   var fd = new FormData();
   var titles = {};
+  //$("#"+formName+":submit").attr("disabled", "disabled");
   formName = $("#"+formName);
   // go through form and get data
   formName.find("input, textarea").each(function(){
@@ -121,23 +122,30 @@ function save(table, formName) {
 
     // handle input type text, file, submit differently;
     switch(t.attr("type")) {
-      case "text":
-      fd.append(t.attr("id"), t.val()); // add the value of the input
-      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
-      break;
+    case "text":
+    fd.append(t.attr("id"), t.val()); // add the value of the input
+    titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+    break;
 
-      case "textarea":
-      fd.append(t.attr("id"), t.val()); // add the value of the input
-      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
-      break;
+    case "textarea":
+    fd.append(t.attr("id"), t.val()); // add the value of the input
+    titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+    break;
 
-      case "file":
-      fd.append(t.attr("id"), $(this)[0].files[0]); // add the value of the input
-      titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
-      break;
+    case "hidden":
+      if (t.attr("name") === "userId") {
+        fd.append(t.attr("name"), t.attr("value")); // add the value of the input
+        titles[t.attr("name")] = t.attr("value") // at the label to titles array
+      }
+    break;
 
-      case "checkbox":
-      case "radio":
+    case "file":
+    fd.append(t.attr("id"), $(this)[0].files[0]); // add the value of the input
+    titles[t.attr("id")] = $("label[for='"+this.id+"']").text(); // at the label to titles array
+    break;
+
+    case "checkbox":
+    case "radio":
       if(t.prop("checked")) {
         if(typeof window[t.attr("name") + "_meta"] === "undefined") { // if array does not exist, create it
           window[t.attr("name") + "_meta"] = {};
@@ -184,12 +192,29 @@ function save(table, formName) {
 
   titles = JSON.stringify(titles);
   fd.append("titles", titles); // add titles to fd
+  //$("#"+formName+":submit").removeAttr('disabled');
+  return fd;
+}
 
-  // post the contents of the form
+// define save();
+function save(table, formName) {
+
+  fd = prepareForm(formName);
+
   return post(table, fd).then(function(data){
     return data;
   });
 }
+
+function update(table, id, formName) {
+
+  fd = prepareForm(formName);
+
+  return put(table, id, fd).then(function(data) {
+    return data;
+  });
+}
+
 
 // handle info coming from upload progress
 function progressHandlingFunction(e){
@@ -253,10 +278,13 @@ function get(table, limit, id) {
 
 // define put()
 function put(table, id, data) {
-  data = JSON.stringify(data);
+  //data = JSON.stringify(data);
   return $.ajax({
     type: 'PUT',
     url: "/api/?table="+table+'&id='+id+'&data='+data,
+    processData: false,
+    contentType: false,
+    data: data,
     success: function(data){
       return data;
     },

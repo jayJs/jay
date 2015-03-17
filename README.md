@@ -164,7 +164,7 @@ isUser(function() { // logged in users
 ##CRUD (experimental - requires [node-jay](https://github.com/jayJs/node-jay) )  
 Jay features a wrapper for common AJAX REST API calls.  
 **post(table, data)** -  add a row to database.  
-**get(table,objectId)** - get a row from database.  
+**get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **put(table, objectId, data)** - update a row in database.  
 **save(table, formId)** - Save data data from form to database.  
 
@@ -207,7 +207,7 @@ objectId - Id of object in database (*string*).
 Returns object with the data.  
 
 ```
-get("Posts", "378QWha5OB").then(function(data) {
+get("Posts", 1, "378QWha5OB").then(function(data) {
   console.log(data);
 }
 ```
@@ -215,7 +215,7 @@ would return
 ```
 {
   objectId: "378QWha5OB",
-  title: "What the f*ck is FormData?",
+  title: "What is FormData?",
   content: "What the user submitted",
   updatedAt: "2015-01-24T13:53:38.498Z",
   createdAt: "2015-01-24T13:53:37.745Z",
