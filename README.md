@@ -117,9 +117,13 @@ function frontPageFunction() {
 
 
 ##Authentication
-**Facebook SDK** - requires [jay-npm](https://github.com/jayJs/jay-npm)
+**Facebook SDK**
 
-If fbAppId is set before Jay is loaded, the whole Facebook SDK is added to the site. You can add fbAppId like this to HTML:  
+If fbAppId is set before Jay is loaded, the whole Facebook SDK is added to the site.
+
+If you want to use it for authentication, [jay-npm](https://github.com/jayJs/jay-npm) is currently required.
+  
+You can add fbAppId like this to HTML:  
 ```
 <script>
   // test account for jay, works on localhost:5000
