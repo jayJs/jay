@@ -1,30 +1,14 @@
+
+var J = {}
+
 // hello hello, facebook connect and #_=_
 if (window.location.hash && window.location.hash == '#_=_') {
   window.location.hash = '/';
 }
 
 if (typeof fbAppId != "undefined") {
-  window.fbAsyncInit = function() {
 
-    FB.init({
-      appId      : fbAppId,
-      xfbml      : true,
-      version    : 'v2.2',
-      status     : true
-    });
-
-    FB.getLoginStatus(function(response){
-      // FB logged in and this app has permissions
-      if (response.status === "connected") {
-        window.userId = response.authResponse.userID;
-        // not a user or not authenticated with the app
-      } else {
-        window.userId = false;
-        //console.log(response);
-      }
-    });
-  };
-
+  // Get FB SDK
   (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {return;}
@@ -32,6 +16,60 @@ if (typeof fbAppId != "undefined") {
     js.src = "https://connect.facebook.net/en_US/all.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
+
+  // If FB SDK is loaded:
+  window.fbAsyncInit = function() {
+
+    // Initialise FB
+    FB.init({
+      appId      : fbAppId,
+      xfbml      : true,
+      version    : 'v2.2',
+      status     : true
+    });
+
+    checkIn();
+  }
+}
+
+function checkIn() {
+  // See if user is logged in
+  FB.getLoginStatus(function(response){
+    if (response.status === 'connected') { // Logged into your app and Facebook
+      J.userId = response.authResponse.userID;
+      var access_token = response.authResponse.accessToken;
+      ajax_send(access_token);
+    } else if (response.status === 'not_authorized') { // The person is logged into Facebook, but not your app.
+      console.log('Please log ' + 'into this app.');
+      J.userId = false;
+    } else { // Not logged into Facebook or app or something else
+      console.log('Please log ' + 'into Facebook.');
+      J.userId = false;
+    }
+  });
+
+  // send access_token
+  function ajax_send(access_token) {
+    var ajax_object = {};
+
+    ajax_object.access_token = access_token;
+    ajax_object.type = "short";
+    $.ajax({
+        dataType: 'json',
+        data: JSON.stringify(ajax_object),
+        contentType: 'application/json',
+        type: 'POST',
+        url: "/auth/fb",
+        success: function(data) {
+          if (data.error == true) {
+            J.token = false;
+          }
+          if (data.error == false) {
+            J.token = data.token;
+          }
+        }
+    });
+  }
 }
 
 // shortcut for console.log
@@ -61,7 +99,7 @@ function a(message) {
 
 function isUser (isLoggedIn, notLoggedIn) {
   // if it's a user
-  if(window.userId != undefined && window.userId != false) {
+  if(J.userId != undefined && J.userId != false) {
     //isLoggedIn();
     isLoggedIn();
     // if it's not a user or we are not sure yet
@@ -69,14 +107,14 @@ function isUser (isLoggedIn, notLoggedIn) {
     var i = 0;
     var getStatus = setInterval(function(){
       // is not a user
-      if(window.userId === false) {
+      if(J.userId === false) {
         notLoggedIn();
         clearInterval(getStatus);
       }
       // is a user or not sure yet
       else {
         // is a user
-        if(window.userId != undefined) {
+        if(J.userId != undefined) {
           isLoggedIn();
           clearInterval(getStatus);
         } else {
@@ -230,8 +268,9 @@ function progressHandlingFunction(e){
 
 // define post()
 function post(table, data) {
+  // perhaps we should wait here if access_token does not exist yet?
   return $.ajax({
-    url: "/api/?table="+table,
+    url: "/api/j/?table="+table+"&token="+J.token+"&user="+J.userId+"&type=short",
     type: 'POST',
     processData: false,
     contentType: false,
@@ -264,7 +303,7 @@ function post(table, data) {
 // define get()
 function get(table, limit, id) {
   return $.ajax({
-    url: "/api/?table="+table+'&id='+id+'&limit='+limit,
+    url: "/api/j/?table="+table+'&id='+id+'&limit='+limit,
     success: function(data){
       return data;
     },
@@ -281,7 +320,7 @@ function put(table, id, data) {
   //data = JSON.stringify(data);
   return $.ajax({
     type: 'PUT',
-    url: "/api/?table="+table+'&id='+id+'&data='+data,
+    url: "/api/j/?table="+table+'&id='+id+'&data='+data,
     processData: false,
     contentType: false,
     data: data,
