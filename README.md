@@ -165,6 +165,7 @@ isUser(function() { // logged in users
     $("#logInBox").show();
   }
 );  
+```
 
 *Facebook SDK debugging*  
 Keep in mind, that if you use it for authenthication then there also has to be a backend - like jay-npm - which also needs the credidetials.
@@ -178,7 +179,6 @@ https://developers.facebook.com/apps/1652366571652103/review-status/
 
 Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you it's errors.  
 
-```
 
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
