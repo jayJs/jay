@@ -167,7 +167,7 @@ isUser(function() { // logged in users
 );  
 ```
 
-*Facebook SDK debugging*  
+**Facebook SDK debugging**  
 Keep in mind, that if you use it for authenthication then there also has to be a backend - like jay-npm - which also needs the credidetials.
 
 In order to make FB authentication work outside localhost, you have to set the FB app status to "Live".  
