@@ -122,7 +122,7 @@ function frontPageFunction() {
 If fbAppId is set before Jay is loaded, the whole Facebook SDK is added to the site.
 
 If you want to use it for authentication, [jay-npm](https://github.com/jayJs/jay-npm) is currently required.
-  
+
 You can add fbAppId like this to HTML:  
 ```
 <script>
@@ -165,6 +165,18 @@ isUser(function() { // logged in users
     $("#logInBox").show();
   }
 );  
+
+*Facebook SDK debugging*  
+Keep in mind, that if you use it for authenthication then there also has to be a backend - like jay-npm - which also needs the credidetials.
+
+In order to make FB authentication work outside localhost, you have to set the FB app status to "Live".  
+In order to do this you need to enter your e-mail here:
+https://developers.facebook.com/apps/1652366571652103/settings/  
+
+and turn the switch here:  
+https://developers.facebook.com/apps/1652366571652103/review-status/  
+
+Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you it's errors.  
 
 ```
 
