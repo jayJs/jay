@@ -82,16 +82,45 @@ function ce(data) {
   console.error(data);
 }
 
+function getBlobURL(input) {
+  var file = input[0].files[0];
+  var blob = URL.createObjectURL(file);
+  if(blob) {
+    return blob;
+  } else {
+    return false;
+  }
+}
+
+function detectFileUpload(){ // from: http://viljamis.com/blog/2012/file-upload-support-on-mobile/
+  var isFileInputSupported = (function () {
+    // Handle devices which falsely report support
+    if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
+     return false;
+    }
+    // Create test element
+    var el = document.createElement("input");
+    el.type = "file";
+    return !el.disabled;
+  })();
+
+  if (isFileInputSupported) {
+      return true;
+    } else { // the browser does not support file="input"
+      return false;
+  }
+}
+
 // write to alert
 function a(message) {
   // find if alert exists and if it does, remove it.
-  var elem = document.getElementById("alert")
+  var elem = document.getElementById("alert");
   if(elem != null) {
     var elemParent = elem.parentNode;
     elemParent.removeChild("alert");
   }
   // create the alert HTML
-  var extra = '<div id="alert" style="z-index: 10;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div id="alertMessage" class="alert alert-danger alert-dismissible" role="alert">'+message+'</div></div>';
+  var extra = '<div id="alert" style="z-index: 10;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div id="alertMessage" class="alert alert-black alert-dismissible" role="alert">'+message+'</div></div>';
   // add html to beginning of app
   var app = document.getElementById('app');
   app.innerHTML = extra + app.innerHTML;
@@ -173,7 +202,7 @@ function prepareForm(formName) {
     case "hidden":
       if (t.attr("name") === "userId") {
         fd.append(t.attr("name"), t.attr("value")); // add the value of the input
-        titles[t.attr("name")] = t.attr("value") // at the label to titles array
+        titles[t.attr("name")] = t.attr("value"); // at the label to titles array
       }
     break;
 
