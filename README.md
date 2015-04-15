@@ -348,6 +348,7 @@ a("Log in failed");
 ##getBlobURL(elementId)  
 In case the browser supports it, gets the URL of the blob of the image attached to the element.  
 Otherwise returns false.  
+Can be useful for creating previews of images the user has submitted.  
 ```  
 $('#image').change(function(){  
   var blob = getBlobURL($(this));
@@ -368,7 +369,7 @@ if(canUploadFiles === false) {
   alert("This browser does not support file uploads");
 }
 ```  
-        
+
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
