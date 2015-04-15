@@ -342,8 +342,32 @@ cl(message); // this does exactly the same thing
 ##a(message)  
 Display an alert to the users.
 ```
-a("Log in failed"); // this logs the message to the console
-```
+a("Log in failed");
+```  
+  
+##getBlobURL(elementId)  
+In case the browser supports it, gets the URL of the blob of the image attached to the element.  
+Otherwise returns false.  
+```  
+$('#image').change(function(){
+  var blob = getBlobURL($(this));
+  if(blob != false) {
+    imagePreview.css("background-image", "url("+blob+")")
+  }
+})
+```  
+
+##detectFileUpload()  
+Does the browser supports file uploading at all?  
+Returns true or false.  
+Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
+detectFileUpload() can help you detect the problem and alert the user.  
+```  
+var canUploadFiles = detectFileUpload();
+if(canUploadFiles === false) {
+  alert("This browser does not support file uploads");
+}
+```  
 
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
