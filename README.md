@@ -184,7 +184,7 @@ Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you i
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
 
 Jay features a wrapper for common AJAX REST API calls.  
-Calls are made to address "/api/j".  
+Calls ($.ajax JSONP) are made to address "/api/j".  
 
 **post(table, data)** -  add a row to database.  
 **get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
@@ -198,7 +198,7 @@ Without data modeling you can't guarantee data consistency and you will limit yo
 Nevertheless you will prototype much quicker.  
 
 ##post(table, data)  
-**Add a row to database.**  
+**Add a row to database via a $.ajax JSONP call.**  
 table - name of the table in database (*string*).  
 data - data to be saved (*FormData*).
 
@@ -222,7 +222,7 @@ There's an easier way to achieve this with save(). Scroll a bit down.
 
 
 ##get(table, limit, objectId)  
-**Get a row from database.**  
+**Get a row from database via a $.ajax JSONP call**  
 table - name of the table in database (*string*).  
 limit - if limit is 1, objectId will be use the get the precise object. In any other case the last posts from the table will be retrieved.  
 objectId - Id of object in database (*string*).  
@@ -250,7 +250,7 @@ would return
 ```
 
 ##put(table, objectId, data)  **NB** currently (0.5.0x) not supported.
-**Update a row in database.**  
+**Update a row in database via a $.ajax JSONP call.**  
 table - name of the table in database (*string*).  
 objectId - Id of object in database (*string*).  
 data - the data to be changed (*object*)  
@@ -267,7 +267,7 @@ put("Posts", "378QWha5OB", update).then(function(data) {
 ```
 
 ##save(table, formId)  
-**Save data data from form to database.**  
+**Save data data from form to database via a $.ajax JSONP call.**  
 table - name of the table to save this data (*string*).  
 formId - id of form, where the data comes (*string*).  
 
@@ -369,6 +369,21 @@ if(canUploadFiles === false) {
   alert("This browser does not support file uploads");
 }
 ```  
+
+##resetForm('formId')  
+Resets elements in the form in a way a reset form button would.  
+Currently handles input type text, checkbox, radio, file and textareas.  
+Useful since Single Page Apps itself don't refresh the form after submitting.  
+```  
+resetForm("addPostForm");
+imagePreview.css("background-image", "")
+```  
+
+##canCache()  
+Detect if the client can handle cache.  
+Returns true or false.
+The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
+Currently it's used internally inside the get() function.  
 
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
