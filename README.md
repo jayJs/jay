@@ -362,7 +362,8 @@ $('#image').change(function(){
 Does the browser supports file uploading at all?  
 Returns true or false.  
 Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
-detectFileUpload() can help you detect the problem and alert the user.  
+detectFileUpload() can help you detect the problem and alert the user.   
+Update: Added detection for iOs 8.0.0 & 8.1.1 which under favorable terms might support file uploads but usually not.  
 ```  
 var canUploadFiles = detectFileUpload();
 if(canUploadFiles === false) {
