@@ -95,7 +95,7 @@ function getBlobURL(input) {
 function detectFileUpload(){ // from: http://viljamis.com/blog/2012/file-upload-support-on-mobile/
   var isFileInputSupported = (function () {
     // Handle devices which falsely report support
-    if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(iPhone (8.0.0|8.0.1))|(iPad (8.0.0|8.0.1))|(iPod (8.0.0|8.0.1))|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
+    if (navigator.userAgent.match(/(Android (1.0|1.1|1.5|1.6|2.0|2.1))|(Windows Phone (OS 7|8.0))|(XBLWP)|(ZuneWP)|(w(eb)?OSBrowser)|(webOS)|(Kindle\/(1.0|2.0|2.5|3.0))/)) {
      return false;
     }
     // Create test element
@@ -142,6 +142,43 @@ function resetForm(formName) {
     $(this).val('');
   });
 }
+
+function saveForm(Table, formId, objectId) {
+  // handle clicking the submit button
+  $("#"+formId + " :submit").each(function(){
+    $(this).on('click', function(event) {
+      event.preventDefault();
+      submitButton = $(this);
+      $("#"+formId).submit();
+    });
+  });
+
+  // handle sending the form
+  var clicked = false;
+  $("#"+formId).on("submit", function(event) {
+    event.preventDefault();
+    if(clicked === false) {
+      pleaseWait.in()
+      if(typeof submitButton !== 'undefined') { submitButton.attr('disabled','disabled'); }
+      if(objectId === undefined) {
+        save(Table, formId).then(function(resp){
+          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
+          pleaseWait.out()
+          window.location = "#/p/" + resp.objectId
+        })
+      } else {
+        update(Table, formId, objectId).then(function(resp){
+          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
+          pleaseWait.out()
+          window.location = "#/p/" + objectId
+        })
+      }
+      clicked = true;
+    }
+  })
+
+}
+
 
 // write to alert
 function a(message) {
@@ -295,6 +332,20 @@ function prepareForm(formName) {
   return fd;
 }
 
+function rebuildForm(formId, data) {
+  $("#"+formId + " :input").each(function(){
+    if($(this).attr("type") != "submit") {
+      if($(this).attr("id") in data) {
+        if($(this).attr("type") === "text") {
+          $(this).val(data[$(this).attr("id")])
+        }
+        if($(this).attr("type") === "file") {
+        }
+      }
+    }
+  })
+}
+
 // define save();
 function save(table, formName) {
 
@@ -305,7 +356,7 @@ function save(table, formName) {
   });
 }
 
-function update(table, id, formName) {
+function update(table, formName, id) {
 
   fd = prepareForm(formName);
 

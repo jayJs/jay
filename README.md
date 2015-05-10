@@ -362,7 +362,7 @@ $('#image').change(function(){
 Does the browser supports file uploading at all?  
 Returns true or false.  
 Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
-detectFileUpload() can help you detect the problem and alert the user.   
+detectFileUpload() can help you detect the problem and alert the user.
 Update: Added detection for iOs 8.0.0 & 8.1.1 which under favorable terms might support file uploads but usually not.  
 ```  
 var canUploadFiles = detectFileUpload();
@@ -386,6 +386,12 @@ Returns true or false.
 The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
 Currently it's used internally inside the get() function.  
 
+## Currently undocumented  
+saveForm(Table, formId, objectId)
+prepareForm  
+rebuildForm  
+update()  
+  
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
