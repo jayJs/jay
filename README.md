@@ -19,12 +19,18 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
 
 // Add javascript right to the end of file before the closing </body> tag
+
+// Easy way:  (all of the same files as debuggers way, but minified and uglified)
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>  
+<script src="/bower_components/jay/dist/all.min.js"></script>  
+
+// or the debuggers way:  
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/js-signals/dist/signals.min.js"></script>
 <script src="/bower_components/hasher/dist/js/hasher.min.js"></script>
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
-<script src="/bower_components/jay/jay.js"></script>
+<script src="/bower_components/jay/dist/jay.js"></script>
 ```
 Put your fbAppId into html head like this
 ```
