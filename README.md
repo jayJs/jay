@@ -36,6 +36,10 @@ Put your fbAppId into html head like this
 ```
 <script>
   var fbAppId = "756437764450452"
+
+  // use J.host, if your database is served from somewhere else then the index.html file itself
+  // var J = {}
+  // J.host = "http://localhost:5000"
 </script>
 ```
 

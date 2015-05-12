@@ -1,5 +1,8 @@
 
-var J = {}
+// if J is not set in index.html, set it here.
+if(typeof J === "undefined") {
+  var J = {}
+}
 
 // hello hello, facebook connect and #_=_
 if (window.location.hash && window.location.hash == '#_=_') {
@@ -142,43 +145,6 @@ function resetForm(formName) {
     $(this).val('');
   });
 }
-
-function saveForm(Table, formId, objectId) {
-  // handle clicking the submit button
-  $("#"+formId + " :submit").each(function(){
-    $(this).on('click', function(event) {
-      event.preventDefault();
-      submitButton = $(this);
-      $("#"+formId).submit();
-    });
-  });
-
-  // handle sending the form
-  var clicked = false;
-  $("#"+formId).on("submit", function(event) {
-    event.preventDefault();
-    if(clicked === false) {
-      pleaseWait.in()
-      if(typeof submitButton !== 'undefined') { submitButton.attr('disabled','disabled'); }
-      if(objectId === undefined) {
-        save(Table, formId).then(function(resp){
-          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          pleaseWait.out()
-          window.location = "#/p/" + resp.objectId
-        })
-      } else {
-        update(Table, formId, objectId).then(function(resp){
-          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          pleaseWait.out()
-          window.location = "#/p/" + objectId
-        })
-      }
-      clicked = true;
-    }
-  })
-
-}
-
 
 // write to alert
 function a(message) {
@@ -332,20 +298,6 @@ function prepareForm(formName) {
   return fd;
 }
 
-function rebuildForm(formId, data) {
-  $("#"+formId + " :input").each(function(){
-    if($(this).attr("type") != "submit") {
-      if($(this).attr("id") in data) {
-        if($(this).attr("type") === "text") {
-          $(this).val(data[$(this).attr("id")])
-        }
-        if($(this).attr("type") === "file") {
-        }
-      }
-    }
-  })
-}
-
 // define save();
 function save(table, formName) {
 
@@ -356,7 +308,7 @@ function save(table, formName) {
   });
 }
 
-function update(table, formName, id) {
+function update(table, id, formName) {
 
   fd = prepareForm(formName);
 
@@ -381,8 +333,15 @@ function progressHandlingFunction(e){
 // define post()
 function post(table, data) {
   // perhaps we should wait here if access_token does not exist yet?
+
+  if(J.host) {
+    var url = J.host + "/api/j/?table="+table+"&token="+J.token+"&user="+J.userId+"&type=short";
+  } else {
+    var url = "/api/j/?table="+table+"&token="+J.token+"&user="+J.userId+"&type=short";
+  }
+
   return $.ajax({
-    url: "/api/j/?table="+table+"&token="+J.token+"&user="+J.userId+"&type=short",
+    url: url,
     type: 'POST',
     processData: false,
     contentType: false,
@@ -416,8 +375,15 @@ function post(table, data) {
 
 // define get()
 function get(table, limit, id) {
+
+  if(J.host) {
+    var url = J.host + "/api/j/?table="+table+'&id='+id+'&limit='+limit;
+  } else {
+    var url = "/api/j/?table="+table+'&id='+id+'&limit='+limit;
+  }
+
   return $.ajax({
-    url: "/api/j/?table="+table+'&id='+id+'&limit='+limit,
+    url: url,
     cache: canCache(),
     dataType: 'jsonp',
     jsonp: "callback",
@@ -435,10 +401,16 @@ function get(table, limit, id) {
 
 // define put()
 function put(table, id, data) {
-  //data = JSON.stringify(data);
+
+  if(J.host) {
+    var url = J.host + "/api/j/?table="+table+'&id='+id+'&data='+data;
+  } else {
+    var url = "/api/j/?table="+table+'&id='+id+'&data='+data;
+  }
+
   return $.ajax({
     type: 'PUT',
-    url: "/api/j/?table="+table+'&id='+id+'&data='+data,
+    url: url,
     processData: false,
     contentType: false,
     data: data,
@@ -448,6 +420,7 @@ function put(table, id, data) {
       return data;
     },
     error: function(error) {
+      cl("siin")
       a(error.responseText);
       cl(error);
       return error;
