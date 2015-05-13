@@ -428,6 +428,30 @@ function put(table, id, data) {
   });
 }
 
+function query(table, limit, key, value, order) {
+  if(J.host) {
+    var url = J.host + "/api/j/query/?table="+table+'&key='+key+'&value='+value+'&limit='+limit+'&order='+order;
+  } else {
+    var url = "/api/j/query/?table="+table+'&key='+key+'&value='+value+'&limit='+limit+'&order='+order;
+  }
+
+  return $.ajax({
+    url: url,
+    cache: canCache(),
+    dataType: 'jsonp',
+    jsonp: "callback",
+    type: 'GET',
+    success: function(data){
+      return data;
+    },
+    error: function(error) {
+      a(error.responseText);
+      ce(error);
+      return error;
+    }
+  });
+}
+
 (function ( $ ) {
 
   $.fn.out = function(transition) {

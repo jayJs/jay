@@ -347,6 +347,21 @@ objectId - object to be updated (*string*).
 
 update() acts the same as save() the only difference being, it updates instead of creates a new post.  
 
+##query(table, limit, key, value, order)  
+**Query for data.**  
+table - name of the table to save this data (*string*).  
+limit - how many results shoult it return (*number*).  
+key - What key to search for (*key*).  
+value - What value to search for (*string*).  
+order - what's the order (*string*).  
+
+Search from table Posts, where "features" is true, get 2 results in the order hoe they were created:
+```
+query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
+  cl(d);
+});
+```
+  
 ##Little helpers  
 
 ##cl(message)  
