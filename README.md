@@ -251,7 +251,7 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **put(table, objectId, data)** - update a row in database. **NB** currently (0.5.0x) not supported.
 **save(table, formId)** - Save data data from form to database.  
-**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.
+**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.  
 **saveForm(Table, formId, objectId)** - Same as save() / update() combined + some clever things Single Page Apps require you to do.  
 **query(table, limit, key, value, order)** - Query for data.  
 
