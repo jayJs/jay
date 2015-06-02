@@ -32,7 +32,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
 <script src="/bower_components/jay/dist/jay.js"></script>
 ```
-If you plan to use Facebook SDK, put this into html <head> like this
+If you plan to use Facebook SDK, put this into html head like this
 ```
 <script>
   var fbAppId = "756437764450452"
@@ -47,8 +47,8 @@ Jay encourages you to use $(foo) instead of $("#foo").
 It's 3 letters less and jQuery supports this out of the box.  
 
 ##show() & hide()  
-This overwrites jQueries show() and hide() with a little bit less jumpy solution for this.  
-They also now take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.  
+Overwrites jQuery show() and hide() with a little bit less jumpy solution for this.  
+Now they also take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.  
 ```
 $(hello).show();
 $(hello).show("bounce")   // comes in with animate.css animation called "bounce"
@@ -167,22 +167,7 @@ https://developers.facebook.com/apps/1652366571652103/settings/
 and turn the switch here:  
 https://developers.facebook.com/apps/1652366571652103/review-status/  
 
-Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you it's errors.  
-
-##Use without /#/ in URL  
-**experimental**  
-Since v0.7 Jay supports URL-s without /#/.  
-In order to use it set J.html5 to true in the beginning of your HTML.  
-```
-//HTML:
-var J = {}
-J.html5 = true;
-```
-This makes it basically work.
-Other things to keep in mind.  
-1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.  
-2. Use rebuildLinks() after you have added new links to the DOM.  
-3. Whatever is serving your page, make sure it's not just serving the html to ("/"), but rather to ("*").  
+Sometimes it's not FB, it's Parse.com.
 
 ##Little helpers  
 
@@ -241,6 +226,21 @@ resetForm("addPostForm");
 $(imagePreview).css("background-image", "")
 ```  
 
+##Use without /#/ in URL  
+**experimental**  
+Since v0.7 Jay supports URL-s without /#/.  
+In order to use it set J.html5 to true in the beginning of your HTML.  
+```
+//HTML:
+var J = {}
+J.html5 = true;
+```
+This makes it basically work.
+Other things to keep in mind.  
+1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.  
+2. Use rebuildLinks() after you have added new links to the DOM.  
+3. Whatever is serving your page, make sure it's not just serving the html to ("/"), but rather to ("*").  
+
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
 
@@ -251,6 +251,9 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **put(table, objectId, data)** - update a row in database. **NB** currently (0.5.0x) not supported.
 **save(table, formId)** - Save data data from form to database.  
+**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.
+**saveForm(Table, formId, objectId)** - Same as save() / update() combined + some clever things Single Page Apps require you to do.  
+**query(table, limit, key, value, order)** - Query for data.  
 
 The calls are asynchronous and can be chained with .then().  
 
