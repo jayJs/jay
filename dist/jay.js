@@ -194,7 +194,6 @@ function saveForm(Table, formId, objectId) {
           window.location = "#/p/" + resp.objectId
         })
       } else {
-        cl("ja")
         update(Table, formId, objectId).then(function(resp){
           if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
           pleaseWait.out()
@@ -516,7 +515,7 @@ function query(table, limit, key, value, order) {
 
 (function ( $ ) {
 
-  $.fn.out = function(transition) {
+  $.fn.hide = function(transition) {
     return this.each(function() {
       var elem = $( this );
       if (transition === undefined) {
@@ -532,7 +531,7 @@ function query(table, limit, key, value, order) {
     });
   }
 
-  $.fn.in = function(transition) {
+  $.fn.show = function(transition) {
     return this.each(function() {
       var elem = $( this );
       if (transition === undefined) {
@@ -555,6 +554,6 @@ function query(table, limit, key, value, order) {
     if (tag.id && tag.id != "fb-root" && tag.id != "fb_xdm_frame_http" && tag.id != "fb_xdm_frame_http" && tag.id != "facebook-jssdk") {
       window[tag.id] = $("#"+tag.id);
     }
-  }
+  } 
 
 }( jQuery ));
