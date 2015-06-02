@@ -77,12 +77,22 @@ function checkIn() {
 
 // shortcut for console.log
 function cl(data) {
-  console.log(data);
+  // IE only allows console if developer window is open.
+  if (typeof console === "undefined") {
+    // I'm so failing sailently
+  } else {
+    console.log(data);
+  }
 }
 
 // shortcut for console.error
 function ce(data) {
-  console.error(data);
+  // IE only allows console if developer window is open.
+  if (typeof console === "undefined") {
+    // I'm so failing sailently
+  } else {
+    console.error(data);
+  }
 }
 
 function getBlobURL(input) {
@@ -161,9 +171,6 @@ function rebuildForm(formId, data) {
 }
 
 function saveForm(Table, formId, objectId) {
-  cl(Table)
-  cl(formId)
-  cl(objectId)
   // handle clicking the submit button
   $("#"+formId + " :submit").each(function(){
     $(this).on('click', function(event) {
