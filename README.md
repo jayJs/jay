@@ -39,7 +39,8 @@ Put your fbAppId into html head like this
 
   // use J.host, if your database is served from somewhere else then the index.html file itself
   // var J = {}
-  // J.host = "http://localhost:5000"
+  // J.host = "http://localhost:5000";
+  // J.html5 = false; // true = don't use hashtag in URL, false = use hashtag in URL
 </script>
 ```
 
@@ -55,29 +56,21 @@ Jay relies on Bootstrap class "hidden".
 ```
 
 ##Selectors  
-Jay takes every class and id on your index.html and creates a variable with their name.  
-```
-// Remember when you did:
-$("#hello").show();
+Jay encourages you to use $(foo) instead of $("#foo").  
+It's 3 letters less and jQuery supports this out of the box.
 
-// how about
-hello.show();
+##show() & hide()  
+This overwrites jQueries show() and hide() with a little bit less jumpy solution for this.
+They also now take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.
 ```
-
-##in() & out()  
-For showing and hiding elements, we have in() & out().
-They also take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.
-```
-$("#hello").in();   // this is exactly the same
-hello.in();         // as this
-
-hello.in("bounce")   // comes in with animate.css animation called "bounce"
+$(hello).show();
+$(hello).show("bounce")   // comes in with animate.css animation called "bounce"
 ```
 It's basically just a shorthand for adding / removing class "hidden" and optionally adding an animation.  
 ```
 // both do the same thing:
 $("#loading").addClass("animated fadeOut").addClass("hidden");
-loading.out('fadeOut');
+$(loading).out('fadeOut');
 ```
 
 ##Model: Routing  
@@ -97,9 +90,9 @@ The View includes information about what to turn on or off on the page and calls
 Views have to be declared before Models.  
 ```
 var frontPageView = function () {
-  otherPageView.out();
-  adminPageView.out();
-  frontPage.in();
+  $(otherPageView).hide();
+  $(adminPageView).hide();
+  $(frontPage).show();
   frontPageFunction();
 }
 ```
@@ -150,14 +143,14 @@ A user is logged in if its logged in to Facebook and a user of a Facebook app.
 (Keep in mind that Facebook apps only work if the Settings -> Site URL matches your URL).  
 ```
 function isLoggedIn() {
-  $("#logInBox").hide();
-  $("#logOutBox").show();  
-  $("#content").append("Your user id is: " + J.userId);
+  $(logInBox).hide();
+  $(logOutBox).show();  
+  $(content).append("Your user id is: " + J.userId);
 }
 
 function isNotLoggedIn() {
-  $("#logOutBox").hide();  
-  $("#logInBox").show();
+  $(logOutBox).hide();  
+  $(logInBox).show();
 }
 
 isUser(isLoggedIn, isNotLoggedIn);  
@@ -167,12 +160,12 @@ OR
 ```
 
 isUser(function() { // logged in users
-  $("#logInBox").hide();
-  $("#logOutBox").show();  
-  $("#content").append("Your user id is: " + J.userId);
+  $(logInBox).hide();
+  $(logOutBox).show();  
+  $(content).append("Your user id is: " + J.userId);
   }, function (){ // not logged in users
-    $("#logOutBox").hide();  
-    $("#logInBox").show();
+    $(logOutBox).hide();  
+    $(logInBox).show();
   }
 );  
 ```
@@ -189,6 +182,21 @@ https://developers.facebook.com/apps/1652366571652103/review-status/
 
 Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you it's errors.  
 
+##Use without /#/ in URL  
+**experimental**  
+Since v0.7 Jay supports URL-s without /#/.  
+In order to use it save J.html5 to true in the beginning of your HTML.  
+```
+//HTML:
+var J = {}
+J.html5 = true;
+```
+This makes it basically work.
+Other things to keep in mind.
+1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.
+2. Use rebuildLinks() after you have added new links to the DOM.
+3. Whatever is serving your page, make sure it's not just serving the html to ("/"), but rather to ("*").  
+
 
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
@@ -202,10 +210,6 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **save(table, formId)** - Save data data from form to database.  
 
 The calls are asynchronous and can be chained with .then().  
-
-**Warning**  
-Without data modeling you can't guarantee data consistency and you will limit your test coverage.  
-Nevertheless you will prototype much quicker.  
 
 ##post(table, data)  
 **Add a row to database via a $.ajax JSONP call.**  
@@ -361,7 +365,7 @@ query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
   cl(d);
 });
 ```
-  
+
 ##Little helpers  
 
 ##cl(message)  
@@ -385,7 +389,7 @@ Can be useful for creating previews of images the user has submitted.
 $('#image').change(function(){  
   var blob = getBlobURL($(this));
   if(blob != false) {
-    imagePreview.css("background-image", "url("+blob+")")
+    $(imagePreview).css("background-image", "url("+blob+")")
   }
 })
 ```  
@@ -409,7 +413,7 @@ Currently handles input type text, checkbox, radio, file and textareas.
 Useful since Single Page Apps itself don't refresh the form after submitting.  
 ```  
 resetForm("addPostForm");
-imagePreview.css("background-image", "")
+$(imagePreview).css("background-image", "")
 ```  
 
 ##rebuildForm('formId', data)  
@@ -421,7 +425,7 @@ function editPostFunction(id){
     var d = data[0];
     rebuildForm("addPostForm", d);
     // rebuildForm() does not take input="file" yet, so:
-    if(d.image && d.image.url) { imagePreview.css("background-image", "url("+d.image.url+")"); }
+    if(d.image && d.image.url) { $(imagePreview).css("background-image", "url("+d.image.url+")"); }
   })
   saveForm("Posts", 'addPostForm', id); // search saveForm() from this Readme.  
 }
@@ -446,12 +450,6 @@ Returns true or false.
 The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
 Currently it's used internally inside the get() function.  
 
-## Currently undocumented  
-saveForm(Table, formId, objectId)
-prepareForm  
-rebuildForm  
-update()  
-
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
@@ -465,6 +463,18 @@ A Single Page App (SPA) architecture relying on a REST API has become my weapon 
 
 The name J or Jay is a wordplay with the name jQuery. The idea of Jay is to be a shorthand for most common things that people might use jQuery for Single Page Applications.  
 I also like Jay-Z.  
+
+##Deprecated
+**foo === $("#foo").**
+Since v0.7 we dropped support for this and encourage you to use $(foo).
+This works by default with jQuery and is more compatible towards old browsers.
+
+**in() & out().**
+Not in use since v0.7.
+The reason for this is that in is an ECMAscript reserved keyword.
+We just did not notice it before, but IE8 started to cry over this.
+So we decided to go for overwriting jQueries show() and hide().
+
 
 ##Licence
 
