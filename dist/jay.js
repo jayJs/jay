@@ -255,10 +255,84 @@ function isUser (isLoggedIn, notLoggedIn) {
   }
 }
 
+// rebuild links for HTML5 mode.
+function rebuildLinks(){
+  // this makes a long circle, since jQuery does not support invoking $("a").on("click") directly
+  // Find all links and go over them
+  var list = document.getElementsByTagName("A");
+  for( var i = 0; i < list.length; i++ ) {
+    // if link does not have a id, give one
+    if(list[i].id.length === 0) {
+      var newId = makePsw();
+      list[i].id = newId;
+    }
+    // attach a listener to all <a>-s
+    $("#" + list[i].id).on("click", function(e){
+      e.preventDefault()
+
+      //  get the original URL
+      var originalUrl = $(this).attr("href");
+
+      // put hash back to window.location, so that "#/" links would work again.
+      var host = window.location.protocol + "//" + window.location.host
+      var href = window.location.href
+
+        // Find if there's a hash
+        if(href.charAt(host.length+1) === "#") {
+          // there already is a hash at the correct place
+        } else  {
+          // detect if browser supports pushState
+          if (window.history && window.history.replaceState) {
+            // put the hashtab back
+            var hashTagBack = host + "/#" + window.location.pathname;
+            history.replaceState("", document.title, hashTagBack);
+          // It's an old browser
+          // so we downgrade to just normal links.
+          } else {
+            if(originalUrl === "#" || originalUrl === "#/") {
+              //alert("originalUrl + " / " + host")
+              window.location = host;
+            } else {
+              window.location = href;
+            }
+          }
+
+        }
+        // and go!
+        window.location = originalUrl;
+    })
+  }
+}
+
+function makePsw() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for( var i=0; i < 16; i++ ) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
+function removeHash(){
+  var host = window.location.protocol + "//" + window.location.host
+  var _hashValRegexp = /#(.*)$/;
+  var result = _hashValRegexp.exec(hasher.getURL());
+  if(result) {
+    if (window.history && window.history.pushState) {     //
+      window.history.pushState("", document.title, host + result[1]);
+    } else {
+      window.location = result[1];
+    }
+  }
+}
+
 function route(crossroads) {
   //setup hasher
   // hasher let's you know when route is changed
   function parseHash(newHash, oldHash){
+    if(J.html5 === true) {
+      removeHash(); // if HTML5 mode is on, remove hash from URL
+    }
     crossroads.parse(newHash);
   }
   hasher.initialized.add(parseHash); //parse initial hash
