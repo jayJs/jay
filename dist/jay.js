@@ -185,18 +185,18 @@ function saveForm(Table, formId, objectId) {
   $("#"+formId).on("submit", function(event) {
     event.preventDefault();
     if(clicked === false) {
-      pleaseWait.in()
+      $(pleaseWait).show()
       if(typeof submitButton !== 'undefined') { submitButton.attr('disabled','disabled'); }
       if(objectId === undefined) {
         save(Table, formId).then(function(resp){
           if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          pleaseWait.out()
+          $(pleaseWait).hide()
           window.location = "#/p/" + resp.objectId
         })
       } else {
         update(Table, formId, objectId).then(function(resp){
           if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          pleaseWait.out()
+          $(pleaseWait).hide()
           window.location = "#/p/" + objectId
         })
       }
@@ -225,7 +225,6 @@ function a(message) {
 function isUser (isLoggedIn, notLoggedIn) {
   // if it's a user
   if(J.userId != undefined && J.userId != false) {
-    //isLoggedIn();
     isLoggedIn();
     // if it's not a user or we are not sure yet
   } else {
