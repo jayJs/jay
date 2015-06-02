@@ -547,13 +547,4 @@ function query(table, limit, key, value, order) {
     });
   }
 
-  // get all tags from HTML and assign foo = $("#foo") & bar = $(".bar")
-  var allTags = document.body.getElementsByTagName('*');
-  for (var tg = 0; tg< allTags.length; tg++) {
-    var tag = allTags[tg];
-    if (tag.id && tag.id != "fb-root" && tag.id != "fb_xdm_frame_http" && tag.id != "fb_xdm_frame_http" && tag.id != "facebook-jssdk") {
-      window[tag.id] = $("#"+tag.id);
-    }
-  } 
-
 }( jQuery ));
