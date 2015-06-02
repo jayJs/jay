@@ -22,7 +22,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 
 // Easy way:  (all of the same files as debuggers way, but minified and uglified)
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>  
-<script src="/bower_components/jay/dist/all.min.js"></script>  
+<script src="/bower_components/jay/dist/jay_and_all_dependencies.min.js"></script>  
 
 // or the debuggers way:  
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -32,36 +32,23 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
 <script src="/bower_components/jay/dist/jay.js"></script>
 ```
-Put your fbAppId into html head like this
+If you plan to use Facebook SDK, put this into html <head> like this
 ```
 <script>
   var fbAppId = "756437764450452"
-
-  // use J.host, if your database is served from somewhere else then the index.html file itself
-  // var J = {}
-  // J.host = "http://localhost:5000";
-  // J.html5 = false; // true = don't use hashtag in URL, false = use hashtag in URL
 </script>
 ```
 
 ##jQuery  
 Jay is a shorthand for jQuery. You can safely use all of jQuery in Jay.  
 
-##Templating  
-Put all design templates into one index.html file and make them invisible.  
-Jay relies on Bootstrap class "hidden".
-```
-<div id="frontPageView" class="hidden"></div>
-<div id="otherPageView" class="hidden"></div>
-```
-
 ##Selectors  
 Jay encourages you to use $(foo) instead of $("#foo").  
-It's 3 letters less and jQuery supports this out of the box.
+It's 3 letters less and jQuery supports this out of the box.  
 
 ##show() & hide()  
-This overwrites jQueries show() and hide() with a little bit less jumpy solution for this.
-They also now take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.
+This overwrites jQueries show() and hide() with a little bit less jumpy solution for this.  
+They also now take an optional argument for a [animate.css](http://daneden.github.io/animate.css/) animation.  
 ```
 $(hello).show();
 $(hello).show("bounce")   // comes in with animate.css animation called "bounce"
@@ -185,18 +172,74 @@ Sometimes it's not FB, it's Parse.com, cl() / console.log() ought to print you i
 ##Use without /#/ in URL  
 **experimental**  
 Since v0.7 Jay supports URL-s without /#/.  
-In order to use it save J.html5 to true in the beginning of your HTML.  
+In order to use it set J.html5 to true in the beginning of your HTML.  
 ```
 //HTML:
 var J = {}
 J.html5 = true;
 ```
 This makes it basically work.
-Other things to keep in mind.
-1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.
-2. Use rebuildLinks() after you have added new links to the DOM.
+Other things to keep in mind.  
+1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.  
+2. Use rebuildLinks() after you have added new links to the DOM.  
 3. Whatever is serving your page, make sure it's not just serving the html to ("/"), but rather to ("*").  
 
+##Little helpers  
+
+##cl(message)  
+A shortcut for console.log(message);  
+```
+console.log(message); // this logs the message to the console
+cl(message); // this does exactly the same thing
+```
+
+##a(message)  
+Display an alert to the users.
+```
+a("Log in failed");
+```  
+
+##getBlobURL(elementId)  
+In case the browser supports it, gets the URL of the blob of the image attached to the element.  
+Otherwise returns false.  
+Can be useful for creating previews of images the user has submitted.  
+```  
+$('#image').change(function(){  
+  var blob = getBlobURL($(this));
+  if(blob != false) {
+    $(imagePreview).css("background-image", "url("+blob+")")
+  }
+})
+```  
+
+##detectFileUpload()  
+Does the browser supports file uploading at all?  
+Returns true or false.  
+Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
+detectFileUpload() can help you detect the problem and alert the user.
+Update: Added detection for iOs 8.0.0 & 8.1.1 which under favorable terms might support file uploads but usually not.  
+```  
+var canUploadFiles = detectFileUpload();
+if(canUploadFiles === false) {
+  alert("This browser does not support file uploads");
+}
+```  
+
+##canCache()  
+Detect if the client can handle cache.  
+Returns true or false.
+The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
+Currently it's used internally inside the get() function.  
+
+
+##resetForm('formId')  
+Resets elements in the form in a way a reset form button would.  
+Currently handles input type text, checkbox, radio, file and textareas.  
+Useful since Single Page Apps itself don't refresh the form after submitting.  
+```  
+resetForm("addPostForm");
+$(imagePreview).css("background-image", "")
+```  
 
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
@@ -365,56 +408,8 @@ query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
   cl(d);
 });
 ```
-
-##Little helpers  
-
-##cl(message)  
-A shortcut for console.log(message);  
-```
-console.log(message); // this logs the message to the console
-cl(message); // this does exactly the same thing
-```
-
-##a(message)  
-Display an alert to the users.
-```
-a("Log in failed");
-```  
-
-##getBlobURL(elementId)  
-In case the browser supports it, gets the URL of the blob of the image attached to the element.  
-Otherwise returns false.  
-Can be useful for creating previews of images the user has submitted.  
-```  
-$('#image').change(function(){  
-  var blob = getBlobURL($(this));
-  if(blob != false) {
-    $(imagePreview).css("background-image", "url("+blob+")")
-  }
-})
-```  
-
-##detectFileUpload()  
-Does the browser supports file uploading at all?  
-Returns true or false.  
-Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
-detectFileUpload() can help you detect the problem and alert the user.
-Update: Added detection for iOs 8.0.0 & 8.1.1 which under favorable terms might support file uploads but usually not.  
-```  
-var canUploadFiles = detectFileUpload();
-if(canUploadFiles === false) {
-  alert("This browser does not support file uploads");
-}
-```  
-
-##resetForm('formId')  
-Resets elements in the form in a way a reset form button would.  
-Currently handles input type text, checkbox, radio, file and textareas.  
-Useful since Single Page Apps itself don't refresh the form after submitting.  
-```  
-resetForm("addPostForm");
-$(imagePreview).css("background-image", "")
-```  
+##saveForm(Table, formId, objectId)
+saveForm performs the same things as save() & update() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events.  
 
 ##rebuildForm('formId', data)  
 If in from there exists an input with the same name as a key in data, the value from the data will be appended to the input.  
@@ -429,10 +424,7 @@ function editPostFunction(id){
   })
   saveForm("Posts", 'addPostForm', id); // search saveForm() from this Readme.  
 }
-```  
-##saveForm(Table, formId, objectId)
-saveForm performs the same things as save() & update() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events.  
-
+```
 ##prepareForm('formName')  
 Turns from contents into FormData. Used internally by save() and update():
 ```  
@@ -443,12 +435,6 @@ function save(table, formName) {
   });
 }
 ```  
-
-##canCache()  
-Detect if the client can handle cache.  
-Returns true or false.
-The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
-Currently it's used internally inside the get() function.  
 
 ##Compability  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
@@ -464,16 +450,16 @@ A Single Page App (SPA) architecture relying on a REST API has become my weapon 
 The name J or Jay is a wordplay with the name jQuery. The idea of Jay is to be a shorthand for most common things that people might use jQuery for Single Page Applications.  
 I also like Jay-Z.  
 
-##Deprecated
-**foo === $("#foo").**
-Since v0.7 we dropped support for this and encourage you to use $(foo).
-This works by default with jQuery and is more compatible towards old browsers.
+##Deprecated  
+**foo === $("#foo").**  
+Since v0.7 we dropped support for this and encourage you to use $(foo).  
+This works by default with jQuery and is more compatible towards old browsers.  
 
-**in() & out().**
-Not in use since v0.7.
-The reason for this is that in is an ECMAscript reserved keyword.
-We just did not notice it before, but IE8 started to cry over this.
-So we decided to go for overwriting jQueries show() and hide().
+**in() & out().**  
+Not in use since v0.7.  
+The reason for this is that in is an ECMAscript reserved keyword.  
+We just did not notice it before, but IE8 started to cry over this.  
+So we decided to go for overwriting jQueries show() and hide().  
 
 
 ##Licence
