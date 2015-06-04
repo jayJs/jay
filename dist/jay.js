@@ -170,7 +170,7 @@ function rebuildForm(formId, data) {
   })
 }
 
-function saveForm(Table, formId, objectId) {
+function saveForm(Table, formId, callback) {
   // handle clicking the submit button
   $("#"+formId + " :submit").each(function(){
     $(this).on('click', function(event) {
@@ -185,27 +185,45 @@ function saveForm(Table, formId, objectId) {
   $("#"+formId).on("submit", function(event) {
     event.preventDefault();
     if(clicked === false) {
-      $(pleaseWait).show()
+      $("#pleaseWait").show()
       if(typeof submitButton !== 'undefined') { submitButton.attr('disabled','disabled'); }
-      if(objectId === undefined) {
-        save(Table, formId).then(function(resp){
-          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          $(pleaseWait).hide()
-          window.location = "#/p/" + resp.objectId
-        })
-      } else {
-        update(Table, formId, objectId).then(function(resp){
-          if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
-          $(pleaseWait).hide()
-          window.location = "#/p/" + objectId
-        })
-      }
+      save(Table, formId).then(function(resp){
+        if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
+        $("#pleaseWait").hide()
+        callback(resp);
+      })
       clicked = true;
     }
   })
 }
 
 
+function updateForm(Table, formId, objectId, callback) {
+  // handle clicking the submit button
+  $("#"+formId + " :submit").each(function(){
+    $(this).on('click', function(event) {
+      event.preventDefault();
+      submitButton = $(this);
+      $("#"+formId).submit();
+    });
+  });
+
+  // handle sending the form
+  var clicked = false;
+  $("#"+formId).on("submit", function(event) {
+    event.preventDefault();
+    if(clicked === false) {
+      $("#pleaseWait").show()
+      if(typeof submitButton !== 'undefined') { submitButton.attr('disabled','disabled'); }
+      update(Table, formId, objectId).then(function(resp){
+        if(typeof submitButton !== 'undefined') { submitButton.removeAttr('disabled'); }
+        $("#pleaseWait").hide()
+        callback(resp);
+      })
+      clicked = true;
+    }
+  })
+}
 
 // write to alert
 function a(message) {

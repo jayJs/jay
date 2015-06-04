@@ -250,12 +250,17 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **post(table, data)** -  add a row to database.  
 **get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **put(table, objectId, data)** - update a row in database. **NB** currently (0.5.0x) not supported.
-**save(table, formId)** - Save data data from form to database.  
-**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.  
-**saveForm(Table, formId, objectId)** - Same as save() / update() combined + some clever things Single Page Apps require you to do.  
 **query(table, limit, key, value, order)** - Query for data.  
 
+**save(table, formId)** - Save data data from form to database.  
+**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.  
 The calls are asynchronous and can be chained with .then().  
+With saveForm() and updateForm() callback approach can be used.  
+
+**saveForm(Table, formId, callback)** - save() + some clever things Single Page Apps require you to do.
+
+**updateForm(Table, formId, objectId, callback)** - Same as saveForm(), but for updating data.  
+
 
 ##post(table, data)  
 **Add a row to database via a $.ajax JSONP call.**  
@@ -411,8 +416,23 @@ query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
   cl(d);
 });
 ```
-##saveForm(Table, formId, objectId)
-saveForm performs the same things as save() & update() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events.  
+  
+##saveForm(Table, formId, callback)
+saveForm performs the same things as save() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events.  
+Returns response from save() - if post was successful, this contains an objectId.
+```
+saveForm("Posts", 'addPostForm', function(data){
+  window.location = "#/p/" + data.objectId;
+});
+```
+
+##updateForm(Table, formId, objectId, callback)
+updateForm performs the same things as update() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events. Returns response from update() - if update was successful, this contains the new updatedAt value.
+```
+updateForm("Posts", 'addPostForm', id, function(data){
+  window.location = "#/p/" + id;
+});
+```
 
 ##rebuildForm('formId', data)  
 If in from there exists an input with the same name as a key in data, the value from the data will be appended to the input.  
