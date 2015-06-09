@@ -17,6 +17,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css">
+<link rel="stylesheet" href="/bower_components/trumbowyg/dist/ui/trumbowyg.min.css">
 
 // Add javascript right to the end of file before the closing </body> tag
 
@@ -30,6 +31,7 @@ or download [jQuery](http://jquery.com/download/), [Bootstrap](http://getbootstr
 <script src="/bower_components/js-signals/dist/signals.min.js"></script>
 <script src="/bower_components/hasher/dist/js/hasher.min.js"></script>
 <script src="/bower_components/crossroads/dist/crossroads.min.js"></script>
+<script src="/bower_components/trumbowyg/dist/trumbowyg.min.js"></script>
 <script src="/bower_components/jay/dist/jay.js"></script>
 ```
 If you plan to use Facebook SDK, put this into html head like this
@@ -174,7 +176,7 @@ Sometimes it's not FB, it's Parse.com.
 ##.wysiwg  
 If you add class .wysiwg to a textarea, then it will automatically turned into a WYSIWG editor.  
 Such editor is aknologed by prepareForm() and rebuildForm().  
-  
+
 ##cl(message)  
 A shortcut for console.log(message);  
 ```
