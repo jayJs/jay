@@ -171,6 +171,10 @@ Sometimes it's not FB, it's Parse.com.
 
 ##Little helpers  
 
+##.wysiwg  
+If you add class .wysiwg to a textarea, then it will automatically turned into a WYSIWG editor.  
+Such editor is aknologed by prepareForm() and rebuildForm().  
+  
 ##cl(message)  
 A shortcut for console.log(message);  
 ```
@@ -416,7 +420,7 @@ query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
   cl(d);
 });
 ```
-  
+
 ##saveForm(Table, formId, callback)
 saveForm performs the same things as save() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events.  
 Returns response from save() - if post was successful, this contains an objectId.

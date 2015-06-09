@@ -161,7 +161,11 @@ function rebuildForm(formId, data) {
     if($(this).attr("type") != "submit") {
       if($(this).attr("id") in data) {
         if($(this).attr("type") === "text") {
-          $(this).val(data[$(this).attr("id")])
+          if ($(this).hasClass("wysiwg")) {
+            $(this).parent().find(".trumbowyg-editor").html(data[$(this).attr("id")])
+          } else {
+            $(this).val(data[$(this).attr("id")])
+          }
         }
         if($(this).attr("type") === "file") {
         }
@@ -639,5 +643,14 @@ function query(table, limit, key, value, order) {
       return this;
     });
   }
+
+  $(".wysiwg").each(function(){
+  $(this).trumbowyg({
+    autogrow: true,
+    btns: ['bold', 'italic', 'link', 'unorderedList'],
+    fullscreenable: false,
+    removeformatPasted: true,
+  });
+})
 
 }( jQuery ));
