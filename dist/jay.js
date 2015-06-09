@@ -166,6 +166,19 @@ function rebuildForm(formId, data) {
         if($(this).attr("type") === "file") {
         }
       }
+      // if it uses name instead if ID, like checkbox
+      else if($(this).attr("name") in data) {
+        if($(this).attr("type") === "checkbox") {
+          // turn to array
+          var toArray = data[$(this).attr("name")].split(",");
+          // find if current checkbox value is in array
+          var findFromArray = toArray.indexOf($(this).attr("value"));
+          // if it is, then mark it as checked
+          if(findFromArray != -1) {
+            $(this).prop('checked', true);
+          }
+        }
+      }
     }
   })
 }
@@ -228,16 +241,9 @@ function updateForm(Table, formId, objectId, callback) {
 // write to alert
 function a(message) {
   // find if alert exists and if it does, remove it.
-  var elem = document.getElementById("alert");
-  if(elem != null) {
-    var elemParent = elem.parentNode;
-    elemParent.removeChild("alert");
-  }
-  // create the alert HTML
-  var extra = '<div id="alert" style="z-index: 10;"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div id="alertMessage" class="alert alert-black alert-dismissible" role="alert">'+message+'</div></div>';
-  // add html to beginning of app
-  var app = document.getElementById('app');
-  app.innerHTML = extra + app.innerHTML;
+  $("#alert").remove();
+  // add the new alert.
+  $("body").append('<div id="alert" style="z-index: 10; margin-left: auto;  margin-right: auto; left: 0; right: 0;"><button type="button" class="close" style="opacity: 1;  z-index: 11;  position: relative; color: #fff;  margin-right: 15px; margin-top: 7px; font-size: 23pt; text-shadow: none;" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><div id="alertMessage" class="alert alert-black alert-dismissible" role="alert">'+message+'</div></div>')
 }
 
 function isUser (isLoggedIn, notLoggedIn) {
@@ -387,10 +393,7 @@ function prepareForm(formName) {
     break;
 
     case "hidden":
-      if (t.attr("name") === "userId") {
-        fd.append(t.attr("name"), t.attr("value")); // add the value of the input
-        titles[t.attr("name")] = t.attr("value"); // at the label to titles array
-      }
+    fd.append(t.attr("name"), t.attr("value"));
     break;
 
     case "file":
@@ -572,7 +575,6 @@ function put(table, id, data) {
       return data;
     },
     error: function(error) {
-      cl("siin")
       a(error.responseText);
       cl(error);
       return error;
