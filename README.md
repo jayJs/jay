@@ -233,19 +233,18 @@ $(imagePreview).css("background-image", "")
 ```  
 
 ##Use without /#/ in URL  
-**experimental**  
-Since v0.7 Jay supports URL-s without /#/.  
+**beta**  
+Since v0.7 Jay supports URL-s without /#/.
 In order to use it set J.html5 to true in the beginning of your HTML.  
 ```
 //HTML:
 var J = {}
 J.html5 = true;
 ```
-This makes it basically work.
-Other things to keep in mind.  
+This makes it basically work.  
+Other things to keep in mind.
 1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.  
-2. Use rebuildLinks() after you have added new links to the DOM.  
-3. Whatever is serving your page, make sure it's not just serving the html to ("/"), but rather to ("*").  
+2. Make sure your server is not just serving the html to ("/"), but rather to ("*").  
 
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  

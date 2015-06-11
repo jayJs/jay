@@ -284,52 +284,33 @@ function isUser (isLoggedIn, notLoggedIn) {
 }
 
 // rebuild links for HTML5 mode.
-function rebuildLinks(){
-  // this makes a long circle, since jQuery does not support invoking $("a").on("click") directly
-  // Find all links and go over them
-  var list = document.getElementsByTagName("A");
-  for( var i = 0; i < list.length; i++ ) {
-    // if link does not have a id, give one
-    if(list[i].id.length === 0) {
-      var newId = makePsw();
-      list[i].id = newId;
-    }
-    // attach a listener to all <a>-s
-    $("#" + list[i].id).on("click", function(e){
-      e.preventDefault()
-
-      //  get the original URL
+if(J.html5 === true) {
+  $("body").on("click", "a", function (event) {
+    if($(this).attr("target") != "_blank") {
+      event.preventDefault()
+      //  get the original URL from link
       var originalUrl = $(this).attr("href");
-
-      // put hash back to window.location, so that "#/" links would work again.
+      // get current URL
       var host = window.location.protocol + "//" + window.location.host
       var href = window.location.href
-
-        // Find if there's a hash
-        if(href.charAt(host.length+1) === "#") {
-          // there already is a hash at the correct place
-        } else  {
-          // detect if browser supports pushState
-          if (window.history && window.history.replaceState) {
-            // put the hashtab back
-            var hashTagBack = host + "/#" + window.location.pathname;
-            history.replaceState("", document.title, hashTagBack);
-          // It's an old browser
-          // so we downgrade to just normal links.
+      // Make sure it isn't already a correct url
+      if(href.charAt(host.length+1) === "#") {
+        // there already is a hash at the correct place, so don't to anything
+      } else  { //  if browser supports pushState, remove piece of old URL and put just what was after hashtag.
+        if (window.history && window.history.replaceState) {
+          var hashTagBack = host + "/#" + window.location.pathname;
+          history.replaceState("", document.title, hashTagBack);
+        } else {   // It's an old browser, so we downgrade to just normal links.
+          if(originalUrl === "#" || originalUrl === "#/") {
+            window.location = host;
           } else {
-            if(originalUrl === "#" || originalUrl === "#/") {
-              //alert("originalUrl + " / " + host")
-              window.location = host;
-            } else {
-              window.location = href;
-            }
+            window.location = href;
           }
-
         }
-        // and go!
-        window.location = originalUrl;
-    })
-  }
+      }
+      window.location = originalUrl;
+    }
+  })
 }
 
 function makePsw() {
