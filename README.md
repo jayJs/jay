@@ -71,7 +71,7 @@ crossroads.addRoute('/', frontPageView);
 crossroads.addRoute('/admin', adminPageView);
 
 // Start routing
-route(crossroads);
+J.route(crossroads);
 ```
 
 ##Views  
@@ -125,7 +125,14 @@ You can add fbAppId like this to HTML:
 Jay loads the whole Facebook SDK for you.
 Users who have authorized the Facebook app receive a client ID (available as J.userId) and a token (available as J.token) that enables them to send data to the server.  
 
-**isUser()**  
+**NB!**
+Starting version 1.0 you just use this in your JS:
+```
+J.addFB(756437764450452);
+```
+
+
+**J.isUser()**  
 isUser() provides the possibility to apply different commands to anonymous or logged-in users. isUser() determines that you are logged in before executing the functions. J.userId contains the user Facebook ID.
 
 A user is logged in if its logged in to Facebook and a user of a Facebook app.  
@@ -142,13 +149,13 @@ function isNotLoggedIn() {
   $(logInBox).show();
 }
 
-isUser(isLoggedIn, isNotLoggedIn);  
+J.isUser(isLoggedIn, isNotLoggedIn);  
 
 ```
 OR
 ```
 
-isUser(function() { // logged in users
+J.isUser(function() { // logged in users
   $(logInBox).hide();
   $(logOutBox).show();  
   $(content).append("Your user id is: " + J.userId);
@@ -190,45 +197,45 @@ Display an alert to the users.
 a("Log in failed");
 ```  
 
-##getBlobURL(elementId)  
+##J.getBlobURL(elementId)  
 In case the browser supports it, gets the URL of the blob of the image attached to the element.  
 Otherwise returns false.  
 Can be useful for creating previews of images the user has submitted.  
 ```  
 $('#image').change(function(){  
-  var blob = getBlobURL($(this));
+  var blob = J.getBlobURL($(this));
   if(blob != false) {
     $(imagePreview).css("background-image", "url("+blob+")")
   }
 })
 ```  
 
-##detectFileUpload()  
+##J.detectFileUpload()  
 Does the browser supports file uploading at all?  
 Returns true or false.  
 Since the early smartphones did not support file uploading via browsers, it might make debugging your webapp painfull (example - the user reports, that he just clicks on the button and nothing happends).  
 detectFileUpload() can help you detect the problem and alert the user.
 Update: Added detection for iOs 8.0.0 & 8.1.1 which under favorable terms might support file uploads but usually not.  
 ```  
-var canUploadFiles = detectFileUpload();
+var canUploadFiles = J.detectFileUpload();
 if(canUploadFiles === false) {
   alert("This browser does not support file uploads");
 }
 ```  
 
-##canCache()  
+##J.canCache()  
 Detect if the client can handle cache.  
 Returns true or false.
 The reason for this is, that some browsers (looking at you, winphone) just can't handle their cache.
 Currently it's used internally inside the get() function.  
 
 
-##resetForm('formId')  
+##J.resetForm('formId')  
 Resets elements in the form in a way a reset form button would.  
 Currently handles input type text, checkbox, radio, file and textareas.  
 Useful since Single Page Apps itself don't refresh the form after submitting.  
 ```  
-resetForm("addPostForm");
+J.resetForm("addPostForm");
 $(imagePreview).css("background-image", "")
 ```  
 
@@ -244,7 +251,12 @@ J.html5 = true;
 This makes it basically work.  
 Other things to keep in mind.
 1. Hasher might not always read URL-s without hashtags present. For that please find Shredder in the extra folder of Jay. It's basically Hasher but with a little hack to also support URL-s without hashtags.  
-2. Make sure your server is not just serving the html to ("/"), but rather to ("*").  
+2. Make sure your server is not just serving the html to ("/"), but rather to ('*').  
+
+Starting version 1.0 you would do this in your script:  
+```
+J.html5 = true;
+```
 
 ##CRUD  
 requires [Jay-npm](https://github.com/jayJs/jay-npm)  
@@ -252,22 +264,22 @@ requires [Jay-npm](https://github.com/jayJs/jay-npm)
 Jay features a wrapper for common AJAX REST API calls.  
 Calls ($.ajax JSONP) are made to address "/api/j".  
 
-**post(table, data)** -  add a row to database.  
-**get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
-**put(table, objectId, data)** - update a row in database. **NB** currently (0.5.0x) not supported.
-**query(table, limit, key, value, order)** - Query for data.  
+**J.post(table, data)** -  add a row to database.  
+**J.get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
+**J.put(table, objectId, data)** - update a row in database.
+**J.query(table, limit, key, value, order)** - Query for data.  
 
-**save(table, formId)** - Save data data from form to database.  
-**update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.  
+**J.save(table, formId)** - Save data data from form to database.  
+**J.update(table, formId, objectId)** - Update data from formId to table in objectId via a $.ajax JSONP call.  
 The calls are asynchronous and can be chained with .then().  
 With saveForm() and updateForm() callback approach can be used.  
 
-**saveForm(Table, formId, callback)** - save() + some clever things Single Page Apps require you to do.
+**saveForm(Table, formId, callback)** - save() + some clever things Single Page Apps require you to do. Since version 1.0 this is all done with just using save().  
 
-**updateForm(Table, formId, objectId, callback)** - Same as saveForm(), but for updating data.  
+**updateForm(Table, formId, objectId, callback)** - Same as saveForm(), but for updating data.  Since version 1.0 this is all done with just using update().  
 
 
-##post(table, data)  
+##J.post(table, data)  
 **Add a row to database via a $.ajax JSONP call.**  
 table - name of the table in database (*string*).  
 data - data to be saved (*FormData*).
@@ -282,7 +294,7 @@ var value = "What the f*ck is FormData?"
 
 data.append(key, value); // add the value of the input
 
-post("Posts", data).then(function(response) {  
+J.post("Posts", data).then(function(response) {  
   if(response.objectId != undefined) {
     console.log("Object created: " + response.objectId);
   }
@@ -300,7 +312,7 @@ objectId - Id of object in database (*string*).
 Returns object with the data.  
 
 ```
-get("Posts", 1, "378QWha5OB").then(function(data) {
+J.get("Posts", 1, "378QWha5OB").then(function(data) {
   console.log(data);
 }
 ```
@@ -319,7 +331,7 @@ would return
 }
 ```
 
-##put(table, objectId, data)  **NB** currently (0.5.0x) not supported.
+##J.put(table, objectId, data)  
 **Update a row in database via a $.ajax JSONP call.**  
 table - name of the table in database (*string*).  
 objectId - Id of object in database (*string*).  
@@ -331,7 +343,7 @@ Returns updatedAt from the update row.
 var update = {
   content: "I have IE9, I have no idea what FormData is."
 }
-put("Posts", "378QWha5OB", update).then(function(data) {
+J.put("Posts", "378QWha5OB", update).then(function(data) {
   cl(data.updatedAt);  
 });
 ```
@@ -360,7 +372,7 @@ HTML:
 ```
 JS:
 ```
-save("TableName", "addNgoForm");
+J.save("TableName", "addNgoForm");
 ```
 Would save the contents of the form to table called TableName.  
 The table would have only three columns:  
@@ -393,13 +405,13 @@ HTML
 
 ```
 addPost.on("submit", function() {
-  save('Posts', 'addPost');  
+  J.save('Posts', 'addPost');  
 })
 
 ```
 Submitting saves contents from form with id addPost to table "Posts".
 
-##update(table, formId, objectId)  
+##J.update(table, formId, objectId)  
 **update data from formId to table in objectId via a $.ajax JSONP call.**  
 table - name of the table to save this data (*string*).  
 formId - id of form, where the data comes (*string*).  
@@ -407,7 +419,7 @@ objectId - object to be updated (*string*).
 
 update() acts the same as save() the only difference being, it updates instead of creates a new post.  
 
-##query(table, limit, key, value, order)  
+##J.query(table, limit, key, value, order)  
 **Query for data.**  
 table - name of the table to save this data (*string*).  
 limit - how many results shoult it return (*number*).  
@@ -417,7 +429,7 @@ order - what's the order (*string*).
 
 Search from table Posts, where "features" is true, get 2 results in the order hoe they were created:
 ```
-query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
+J.query("Posts", 2, "featured", "true", 'createdAt').then(function(d){
   cl(d);
 });
 ```
@@ -430,30 +442,32 @@ saveForm("Posts", 'addPostForm', function(data){
   window.location = "#/p/" + data.objectId;
 });
 ```
+**NB!** Since version 1.0 this is all done with just using save().  
 
-##updateForm(Table, formId, objectId, callback)
+##J.updateForm(Table, formId, objectId, callback)
 updateForm performs the same things as update() combined with handling all the stupid things you need to know with Single Page Apps forms, most notably preventing same click from triggering multiple events. Returns response from update() - if update was successful, this contains the new updatedAt value.
 ```
 updateForm("Posts", 'addPostForm', id, function(data){
   window.location = "#/p/" + id;
 });
 ```
+**NB!** Since version 1.0 this is all done with just using update().  
 
-##rebuildForm('formId', data)  
+##J.rebuildForm('formId', data)  
 If in from there exists an input with the same name as a key in data, the value from the data will be appended to the input.  
 ```  
 function editPostFunction(id){
-  resetForm("addPostForm"); // search resetForm from this Readme
+  J.resetForm("addPostForm"); // search resetForm from this Readme
   get("Posts", 1, id).then(function(data){
     var d = data[0];
-    rebuildForm("addPostForm", d);
+    J.rebuildForm("addPostForm", d);
     // rebuildForm() does not take input="file" yet, so:
     if(d.image && d.image.url) { $(imagePreview).css("background-image", "url("+d.image.url+")"); }
   })
   saveForm("Posts", 'addPostForm', id); // search saveForm() from this Readme.  
 }
 ```
-##prepareForm('formName')  
+##J.prepareForm('formName')  
 Turns from contents into FormData. Used internally by save() and update():
 ```  
 function save(table, formName) {
