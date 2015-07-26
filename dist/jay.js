@@ -431,7 +431,11 @@ window.J = (function ($) {
             //  get the original URL from link
             var originalUrl = $(this).attr("href");
             // get current URL
-            var host = window.location.protocol + "//" + window.location.host;
+            if (J.host) {
+              var host = J.host.substring(0, J.host.length - 1); // J.host minus "/" from the end
+            } else {
+              var host = window.location.protocol + "//" + window.location.host;
+            }
             var href = window.location.href;
             // Make sure it isn't already a correct url
             if (href.charAt(host.length + 1) === "#") {
