@@ -430,13 +430,16 @@ window.J = (function ($) {
             event.preventDefault();
             //  get the original URL from link
             var originalUrl = $(this).attr("href");
+
             // get current URL
+            var host;
             if (J.host) {
-              var host = J.host.substring(0, J.host.length - 1); // J.host minus "/" from the end
+              host = J.host.substring(0, J.host.length - 1); // J.host minus "/" from the end
             } else {
-              var host = window.location.protocol + "//" + window.location.host;
+              host = window.location.protocol + "//" + window.location.host;
             }
             var href = window.location.href;
+
             // Make sure it isn't already a correct url
             if (href.charAt(host.length + 1) === "#") {
               // there already is a hash at the correct place, so don't to anything
@@ -459,12 +462,23 @@ window.J = (function ($) {
     },
 
     removeHash: function () {
-      var host = window.location.protocol + "//" + window.location.host;
+      var host;
+      if (J.host) {
+        host = J.host.substring(0, J.host.length - 1); // J.host minus "/" from the end
+      } else {
+        host = window.location.protocol + "//" + window.location.host;
+      }
+
       var hashValRegexp = /#(.*)$/;
       var result = hashValRegexp.exec(hasher.getURL());
+
       if (result) {
-        if (window.history && window.history.pushState) {     //
-          window.history.pushState("", document.title, host + result[1]);
+        if (window.history && window.history.pushState) {
+          if (result[1] === "/") {
+            window.history.pushState("", document.title, host);
+          } else {
+            window.history.pushState("", document.title, host + result[1]);
+          }
         } else {
           window.location = result[1];
         }
