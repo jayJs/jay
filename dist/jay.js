@@ -480,7 +480,11 @@ window.J = (function ($) {
             window.history.pushState("", document.title, host + result[1]);
           }
         } else {
-          window.location = result[1];
+          if(J.host) {
+            window.location = host + "/" + result[1];
+          } else {
+            window.location = result[1];
+          }
         }
       }
     },
