@@ -10,7 +10,7 @@ The focus is to provide super fast prototyping possibilities for Single Page App
 This includes routing, authentication, form handling, WYSIWG editor, basic CRUD capability, and some little helpers that come handy for front end javascript. There is also a proposal for structuring your code to resemble MVC logic.  
 
 ##Overview  
-CRUD:  
+**CRUD:**  
 J.get()     // AJAX get  
 J.post()    // AJAX post  
 J.put()     // AJAX put  
@@ -18,11 +18,11 @@ J.query()   // query by key and value
 J.save()    // save all data from a form  
 J.update()  // update all data from a form.  
 
-FB SDK & Auth:  
+**FB SDK & Auth:**  
 J.addFB()   // add FB SDK  
 J.isUser()  // as asynchronously, weather the user is logged in.
 
-Form handling:  
+**Form handling:**  
 J.getBlobURL()        // get image data from file input (used for previews)  
 J.detectFileUpload()  // detect, if the browser can upload files  
 J.resetForm()         // reset the form  
@@ -30,11 +30,11 @@ J.rebuildForm()       // rebuild form contents from data (used when editing data
 J.prepareForm()       // get data from Form and create Form Data.  
 .wysiwg               // if an element has .wysiwg as a class, it will become a WYSIWG editor.  
 
-Routing:  
+**Routing:**  
 J.route     // start routing
 J.html5     // removes hashtags from URL  
 
-Little helpers:  
+**Little helpers:**  
 cl(),       // console.log()  
 ce(),       // console.error()  
 a(),        // creates a custom alert  
