@@ -217,7 +217,7 @@ window.J = (function ($) {
           version    : 'v2.2',
           status     : true
         });
-        if(J.logInFB === true) {
+        if (J.logInFB === true) {
           J.checkIn();
         }
       };
@@ -481,7 +481,7 @@ window.J = (function ($) {
             window.history.pushState("", document.title, host + result[1]);
           }
         } else {
-          if(J.host) {
+          if (J.host) {
             window.location = host + "/" + result[1];
           } else {
             window.location = result[1];
@@ -505,12 +505,14 @@ window.J = (function ($) {
     }
   };
 
-  $(".wysiwg").trumbowyg({
-    autogrow: true,
-    btns: ['bold', 'italic', 'link', 'unorderedList'],
-    fullscreenable: false,
-    removeformatPasted: true
-  });
+  if (J.wysiwg === true) {
+    $(".wysiwg").trumbowyg({
+      autogrow: true,
+      btns: ['bold', 'italic', 'link', 'unorderedList'],
+      fullscreenable: false,
+      removeformatPasted: true
+    });
+  }
 
   $.fn.hide = function (transition) {
     return this.each(function () {

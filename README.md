@@ -178,8 +178,12 @@ Sometimes it's not FB, it's Parse.com.
 ##Little helpers  
 
 ##.wysiwg  
-If you add class .wysiwg to a textarea, then it will automatically turned into a WYSIWG editor.  
-Such editor is aknologed by prepareForm() and rebuildForm().  
+```
+J.wysiwg = true
+```
+If you set J.wysiwg to true (and have trumbowyg added), then
+you can add class .wysiwg to a textarea, to automatically turn it into a WYSIWG editor.  
+Such editor is aknowledged by prepareForm() and rebuildForm().  
 
 ##cl(message)  
 A shortcut for console.log(message);  
