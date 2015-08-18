@@ -20,6 +20,7 @@ J.update()  // update all data from a form.
 
 **FB SDK & Auth:**  
 J.addFB()   // add FB SDK  
+J.logInFB = true   // weather user should be authented against FB  
 J.isUser()  // as asynchronously, weather the user is logged in.
 
 **Form handling:**  
@@ -117,6 +118,7 @@ function frontPageFunction() {
 **Facebook SDK**
 
 ```
+J.logInFB = true; // authenticate user against FB
 J.addFB(756437764450452); // your FB APP id
 ```
 

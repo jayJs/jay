@@ -217,8 +217,9 @@ window.J = (function ($) {
           version    : 'v2.2',
           status     : true
         });
-
-        J.checkIn();
+        if(J.logInFB === true) {
+          J.checkIn();
+        }
       };
 
       //  Fix facebook connect ""#_=_" direction
