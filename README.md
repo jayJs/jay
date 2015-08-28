@@ -14,6 +14,7 @@ This includes routing, authentication, form handling, WYSIWG editor, basic CRUD 
 J.get()     // AJAX get  
 J.post()    // AJAX post  
 J.put()     // AJAX put  
+J.delete()     // AJAX delete  
 J.query()   // query by key and value  
 J.save()    // save all data from a form  
 J.update()  // update all data from a form.  
@@ -277,6 +278,7 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **J.post(table, data)** -  add a row to database.  
 **J.get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **J.put(table, objectId, data)** - update a row in database.
+**J.delete(table, objectId)** - delete a row in database.
 **J.query(table, limit, key, value, order)** - Query for data.  
 
 **J.save(table, formId)** - Save data data from form to database.  
@@ -355,6 +357,20 @@ var update = {
 }
 J.put("Posts", "378QWha5OB", update).then(function(data) {
   cl(data.updatedAt);  
+});
+```
+
+
+##J.delete(table, objectId)  
+**Delete a row in database via a $.ajax JSONP call.**  
+table - name of the table in database (*string*).  
+objectId - Id of object in database (*string*).  
+
+Returns id of object deleted.
+
+```
+J.delete("Posts", "378QWha5OB").then(function(data) {
+  cl(data.objectId);  
 });
 ```
 

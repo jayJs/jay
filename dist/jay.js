@@ -107,6 +107,29 @@ window.J = (function ($) {
       });
     },
 
+    delete: function (table, id) {
+
+      var url = "/api/j/?table=" + table + '&id=' + id;
+      if (J.host) { url = J.host + url; }
+
+      return $.ajax({
+        type: 'DELETE',
+        url: url,
+        processData: false,
+        contentType: false,
+        dataType: 'jsonp',
+        jsonp: "callback",
+        success: function (data) {
+          return data;
+        },
+        error: function (error) {
+          a(error.responseText);
+          cl(error);
+          return error;
+        }
+      });
+    },
+
     query: function (table, limit, key, value, order) {
 
       var url = "/api/j/query/?table=" + table + '&key=' + key + '&value=' + value + '&limit=' + limit + '&order=' + order;
