@@ -525,17 +525,20 @@ window.J = (function ($) {
       hasher.initialized.add(parseHash); //parse initial hash
       hasher.changed.add(parseHash); //parse hash changes
       hasher.init(); //start listening for history change
-    }
-  };
+    },
 
-  if (J.wysiwg === true) {
-    $(".wysiwg").trumbowyg({
-      autogrow: true,
-      btns: ['bold', 'italic', 'link', 'unorderedList'],
-      fullscreenable: false,
-      removeformatPasted: true
-    });
-  }
+    wysiwg: function (choice) {
+      if (choice === true) {
+        $(".wysiwg").trumbowyg({
+          autogrow: true,
+          btns: ['bold', 'italic', 'link', 'unorderedList'],
+          fullscreenable: false,
+          removeformatPasted: true
+        });
+      }
+    }
+
+  };
 
   $.fn.hide = function (transition) {
     return this.each(function () {
