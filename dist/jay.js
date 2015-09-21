@@ -154,7 +154,7 @@ window.J = (function ($) {
 
     save: function (table, formId, callback) {
       var clicked = false;
-      $("#" + formId).on("submit", function (event) {
+      $("#" + formId).unbind("submit").one("submit", function (event) {
         event.preventDefault();
         if (clicked === false) {
           $("#pleaseWait").show();
@@ -172,7 +172,7 @@ window.J = (function ($) {
 
     update: function (table, formId, objectId, callback) {
       var clicked = false;
-      $("#" + formId).on("submit", function (event) {
+      $("#" + formId).unbind("submit").one("submit", function (event) {
         event.preventDefault();
         if (clicked === false) {
           $("#pleaseWait").show();
@@ -339,7 +339,7 @@ window.J = (function ($) {
     rebuildForm: function (formId, data) {
       $("#" + formId + " :input:not(:submit)").each(function () {
         var $field = $(this);
-        if (data.hasOwnProperty($field.attr("id"))) {
+        if (data && data.hasOwnProperty($field.attr("id"))) {
           if ($field.attr("type") === "text") {
             if ($field.hasClass("wysiwg")) {
               $field.parent().find(".trumbowyg-editor").html(data[$field.attr("id")]);
@@ -351,7 +351,7 @@ window.J = (function ($) {
           if ($field.attr("type") === "file") {
             // todo
           }
-        } else if (data.hasOwnProperty($field.attr("name"))) { // if it uses name instead if ID, like checkbox
+        } else if (data && data.hasOwnProperty($field.attr("name"))) { // if it uses name instead if ID, like checkbox
           if ($field.attr("type") === "checkbox") {
             // turn to array
             var toArray = data[$field.attr("name")].split(",");
