@@ -294,7 +294,7 @@ window.J = (function ($) {
     },
 
     getBlobURL: function ($input) {
-      if (URL) { // this is for you, IE7, IE8
+      if (window.URL) { // this is for you, IE7, IE8
         var file = $input[0].files[0];
         var blob = URL.createObjectURL(file);
         if (blob) {
