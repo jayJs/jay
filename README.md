@@ -504,7 +504,7 @@ function save(table, formName) {
 }
 ```  
 
-##Compability  
+##Compatibility  
 Visit the site - compatible until IE 6. We use [latest jQuery version 1.x](http://jquery.com/browser-support/).  
 Post data - compatible until IE 10. The bottleneck is [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData#Browser_compatibility).  
 
