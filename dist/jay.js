@@ -340,7 +340,8 @@ window.J = (function ($) {
       $("#" + formId + " :input:not(:submit)").each(function () {
         var $field = $(this);
         if (data && data.hasOwnProperty($field.attr("id"))) {
-          if ($field.attr("type") === "text") {
+          var elementType = $(this).get(0).tagName
+          if ($field.attr("type") === "text" || elementType === 'TEXTAREA') {
             if ($field.hasClass("wysiwg")) {
               $field.parent().find(".trumbowyg-editor").html(data[$field.attr("id")]);
               $field.val($(".trumbowyg-editor").html());
@@ -406,7 +407,7 @@ window.J = (function ($) {
             window[t.attr("name") + "_meta"][t.attr("value")] = t.parent().text();
             window[t.attr("name") + "_data"].push(t.val());
           }
-          if ($.inArray(t.attr("name"), checkboxes) === "-1") { // if array name not there yet, add it to checkboxes array
+          if ($.inArray(t.attr("name"), checkboxes) === -1) { // if array name not there yet, add it to checkboxes array
             checkboxes.push(t.attr("name"));
           }
           break;
