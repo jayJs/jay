@@ -85,7 +85,7 @@ window.J = (function ($) {
 
     put: function (table, id, data) {
 
-      var url = "/api/j/?table=" + table + '&id=' + id + '&data=' + data;
+      var url = "/api/j/?table=" + table + '&id=' + id + '&data=' + data + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -109,7 +109,7 @@ window.J = (function ($) {
 
     delete: function (table, id) {
 
-      var url = "/api/j/?table=" + table + '&id=' + id;
+      var url = "/api/j/?table=" + table + '&id=' + id + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
