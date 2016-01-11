@@ -264,8 +264,8 @@ window.J = (function ($) {
           data: JSON.stringify(ajax_object),
           type: 'POST',
           url: "/auth/fb",
-          dataType: 'jsonp',
-          jsonp: "callback",
+//          dataType: 'jsonp',
+//          jsonp: "callback",
           success: function (data) {
             if (data.error === true) {
               J.token = false;
