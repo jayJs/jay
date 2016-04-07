@@ -403,9 +403,14 @@ window.J = (function ($) {
             if (typeof window[t.attr("name") + "_data"] === "undefined") { // if array does not exist, create it
               window[t.attr("name") + "_data"] = [];
             }
-
             window[t.attr("name") + "_meta"][t.attr("value")] = t.parent().text();
-            window[t.attr("name") + "_data"].push(t.val());
+            if (t.attr("type") === "checkbox") {
+              if ($.inArray( t.val(), window[t.attr("name") + "_data"]) < 0) {
+                window[t.attr("name") + "_data"].push(t.val());  // it's an array if it's checkboxes
+              }
+            } else if (t.attr("type") === "radio") {
+              window[t.attr("name") + "_data"] = t.val(); // it's not an array if it's radio
+            }
           }
           if ($.inArray(t.attr("name"), checkboxes) === -1) { // if array name not there yet, add it to checkboxes array
             checkboxes.push(t.attr("name"));
