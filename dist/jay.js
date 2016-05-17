@@ -33,8 +33,11 @@ window.J = (function ($) {
 
   var jay = {
 
+    surf: [], // Last two pages I've surfed
+    surfCurrent: 0, // current number I'm b
+
     get: function (table, limit, id) {
-      var url = "/api/j/?table=" + table + '&id=' + id + '&limit=' + limit;
+      var url = "api/j/?table=" + table + '&id=' + id + '&limit=' + limit;
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -56,7 +59,7 @@ window.J = (function ($) {
 
     post: function (table, data) {
       // TODO wait until access_token exists
-      var url = "/api/j/?table=" + table + "&token=" + J.token + "&user=" + J.userId + "&type=short";
+      var url = "api/j/?table=" + table + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -85,7 +88,7 @@ window.J = (function ($) {
 
     put: function (table, id, data) {
 
-      var url = "/api/j/?table=" + table + '&id=' + id + '&data=' + data + "&token=" + J.token + "&user=" + J.userId + "&type=short";
+      var url = "api/j/?table=" + table + '&id=' + id + '&data=' + data + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -109,7 +112,7 @@ window.J = (function ($) {
 
     delete: function (table, id) {
 
-      var url = "/api/j/?table=" + table + '&id=' + id + "&token=" + J.token + "&user=" + J.userId + "&type=short";
+      var url = "api/j/?table=" + table + '&id=' + id + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -132,7 +135,7 @@ window.J = (function ($) {
 
     query: function (table, limit, key, value, order) {
 
-      var url = "/api/j/query/?table=" + table + '&key=' + key + '&value=' + value + '&limit=' + limit + '&order=' + order;
+      var url = "api/j/query/?table=" + table + '&key=' + key + '&value=' + value + '&limit=' + limit + '&order=' + order;
       if (J.host) { url = J.host + url; }
 
       return $.ajax({
@@ -455,6 +458,35 @@ window.J = (function ($) {
     html5: function (choice) {
       if (choice === true) {
         J.isHTHML5 = true;
+
+        // keep a count on pages visited
+        // TODO do it more then just the first page.
+        function surfIt () {
+          J.surfCurrent++;
+          var currentPage = {
+            index: J.surfCurrent,
+            href: document.location.href,
+            hash: document.location.hash
+          }
+          J.surf.unshift(currentPage);
+        }
+
+        // surf it on init
+        surfIt();
+        window.onpopstate = function(event) {
+          // surf it on a popstate
+          surfIt();
+          // if it's a backbutton
+          if (J.surf[0] && J.surf[1] && J.surf[0].href && J.surf[1].href && J.surf[0].href === J.surf[1].href) {
+            // go back
+            if (J.surf[2].hash) {
+              location.href = J.surf[2].hash
+            } else {
+              location.href = "#"
+            }
+          }
+        };
+
         $("body").on("click", "a", function (event) {
           if ($(this).attr("target") !== "_blank") {
             event.preventDefault();
