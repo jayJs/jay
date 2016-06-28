@@ -110,7 +110,7 @@ window.J = (function ($) {
       });
     },
 
-    delete: function (table, id) {
+    remove: function (table, id) {
 
       var url = "api/j/?table=" + table + '&id=' + id + "&token=" + J.token + "&user=" + J.userId + "&type=short";
       if (J.host) { url = J.host + url; }
@@ -455,27 +455,27 @@ window.J = (function ($) {
       return fd;
     },
 
+    // keep a count on pages visited
+    // TODO do it more then just the first page.
+     surfIt: function () {
+      J.surfCurrent++;
+      var currentPage = {
+        index: J.surfCurrent,
+        href: document.location.href,
+        hash: document.location.hash
+      }
+      J.surf.unshift(currentPage);
+    },
+
     html5: function (choice) {
       if (choice === true) {
         J.isHTHML5 = true;
 
-        // keep a count on pages visited
-        // TODO do it more then just the first page.
-        function surfIt () {
-          J.surfCurrent++;
-          var currentPage = {
-            index: J.surfCurrent,
-            href: document.location.href,
-            hash: document.location.hash
-          }
-          J.surf.unshift(currentPage);
-        }
-
         // surf it on init
-        surfIt();
+        J.surfIt();
         window.onpopstate = function(event) {
           // surf it on a popstate
-          surfIt();
+          J.surfIt();
           // if it's a backbutton
           if (J.surf[0] && J.surf[1] && J.surf[0].href && J.surf[1].href && J.surf[0].href === J.surf[1].href) {
             // go back

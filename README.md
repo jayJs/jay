@@ -14,7 +14,7 @@ This includes routing, authentication, form handling, WYSIWG editor, basic CRUD 
 J.get()     // AJAX get  
 J.post()    // AJAX post  
 J.put()     // AJAX put  
-J.delete()     // AJAX delete  
+J.remove()     // AJAX delete  
 J.query()   // query by key and value  
 J.save()    // save all data from a form  
 J.update()  // update all data from a form.  
@@ -132,7 +132,7 @@ Users who have authorized the Facebook app receive a client ID (available as J.u
 In order for this to work correctly, FB app ID and SECRET must be set in the backend and match the FB APP id set in frontend.  
 
 Currently this isues JSON, instead of JSONP (like most of the library).     
-  
+
 **J.isUser()**  
 isUser() provides the possibility to apply different commands to anonymous or logged-in users. isUser() determines that you are logged in before executing the functions. J.userId contains the user Facebook ID.
 
@@ -281,7 +281,7 @@ Calls ($.ajax JSONP) are made to address "/api/j".
 **J.post(table, data)** -  add a row to database.  
 **J.get(table, limit, objectId)** - get a row from database. If limit is 1, add objectId, else <limit> last posts are queried.  
 **J.put(table, objectId, data)** - update a row in database.
-**J.delete(table, objectId)** - delete a row in database.
+**J.remove(table, objectId)** - delete a row in database.
 **J.query(table, limit, key, value, order)** - Query for data.  
 
 **J.save(table, formId)** - Save data data from form to database.  
@@ -364,7 +364,7 @@ J.put("Posts", "378QWha5OB", update).then(function(data) {
 ```
 
 
-##J.delete(table, objectId)  
+##J.remove(table, objectId)  
 **Delete a row in database via a $.ajax JSONP call.**  
 table - name of the table in database (*string*).  
 objectId - Id of object in database (*string*).  
@@ -372,7 +372,7 @@ objectId - Id of object in database (*string*).
 Returns id of object deleted.
 
 ```
-J.delete("Posts", "378QWha5OB").then(function(data) {
+J.remove("Posts", "378QWha5OB").then(function(data) {
   cl(data.objectId);  
 });
 ```
