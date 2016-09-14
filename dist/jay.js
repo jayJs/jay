@@ -374,6 +374,7 @@ window.J = (function ($) {
 
       var checkboxes = [],
         fd = new FormData(),
+        checkboxCache = {},
         titles = {},
         $form = $("#" + formId);
       // go through form and get data
@@ -400,19 +401,19 @@ window.J = (function ($) {
         case "checkbox":
         case "radio":
           if (t.prop("checked")) {
-            if (typeof window[t.attr("name") + "_meta"] === "undefined") { // if array does not exist, create it
-              window[t.attr("name") + "_meta"] = {};
+            if (typeof checkboxCache[t.attr("name") + "_meta"] === "undefined") { // if array does not exist, create it
+              checkboxCache[t.attr("name") + "_meta"] = {};
             }
-            if (typeof window[t.attr("name") + "_data"] === "undefined") { // if array does not exist, create it
-              window[t.attr("name") + "_data"] = [];
+            if (typeof checkboxCache[t.attr("name") + "_data"] === "undefined") { // if array does not exist, create it
+              checkboxCache[t.attr("name") + "_data"] = [];
             }
-            window[t.attr("name") + "_meta"][t.attr("value")] = t.parent().text();
+            checkboxCache[t.attr("name") + "_meta"][t.attr("value")] = t.parent().text();
             if (t.attr("type") === "checkbox") {
-              if ($.inArray( t.val(), window[t.attr("name") + "_data"]) < 0) {
-                window[t.attr("name") + "_data"].push(t.val());  // it's an array if it's checkboxes
+              if ($.inArray( t.val(), checkboxCache[t.attr("name") + "_data"]) < 0) {
+                checkboxCache[t.attr("name") + "_data"].push(t.val());  // it's an array if it's checkboxes
               }
             } else if (t.attr("type") === "radio") {
-              window[t.attr("name") + "_data"] = t.val(); // it's not an array if it's radio
+              checkboxCache[t.attr("name") + "_data"] = t.val(); // it's not an array if it's radio
             }
           }
           if ($.inArray(t.attr("name"), checkboxes) === -1) { // if array name not there yet, add it to checkboxes array
@@ -438,16 +439,16 @@ window.J = (function ($) {
       for (i = 0; i < checkboxes.length + 1; i++) {
         var inputId = checkboxes[i];
         if (inputId) {
-          var metaData = window[checkboxes[i] + "_meta"];
-          var theData = window[checkboxes[i] + "_data"];
+          var metaData = checkboxCache[checkboxes[i] + "_meta"];
+          var theData = checkboxCache[checkboxes[i] + "_data"];
           metaData = JSON.stringify(metaData);
           fd.append(inputId + "_meta", metaData); // add the value of the input
           fd.append(inputId, theData); // add the value of the input
           titles[inputId] = $("label[for='" + inputId + "']").text(); // at the label to titles array
-          if (window[inputId]) { window[inputId].length = 0; }
         }
       }
-      checkboxes.length = 0;
+      checkboxes = [];
+      checkboxCache = {};
 
       titles = JSON.stringify(titles);
       fd.append("titles", titles); // add titles to fd
