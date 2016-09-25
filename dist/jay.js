@@ -347,7 +347,7 @@ window.J = (function ($) {
           if ($field.attr("type") === "text" || elementType === 'TEXTAREA') {
             if ($field.hasClass("wysiwg")) {
               $field.parent().find(".trumbowyg-editor").html(data[$field.attr("id")]);
-              $field.val($(".trumbowyg-editor").html());
+              $field.html(data[$field.attr("id")]);
             } else {
               $field.val(data[$field.attr("id")]);
             }
