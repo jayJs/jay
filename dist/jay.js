@@ -46,6 +46,7 @@ window.J = (function ($) {
         dataType: 'jsonp',
         jsonp: "callback",
         type: 'GET',
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (data) {
           return data;
         },
@@ -70,6 +71,7 @@ window.J = (function ($) {
         data: data,
         dataType: 'jsonp',
         jsonp: "callback",
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (response) {
           if (response.objectId !== undefined) {
             //cl("post done" + response.objectId);
@@ -99,6 +101,7 @@ window.J = (function ($) {
         data: data,
         dataType: 'jsonp',
         jsonp: "callback",
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (data) {
           return data;
         },
@@ -122,6 +125,7 @@ window.J = (function ($) {
         contentType: false,
         dataType: 'jsonp',
         jsonp: "callback",
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (data) {
           return data;
         },
@@ -144,6 +148,7 @@ window.J = (function ($) {
         dataType: 'jsonp',
         jsonp: "callback",
         type: 'GET',
+        beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (data) {
           return data;
         },
