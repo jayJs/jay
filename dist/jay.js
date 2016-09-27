@@ -73,8 +73,8 @@ window.J = (function ($) {
         jsonp: "callback",
         beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + J.token); },
         success: function (response) {
-          if (response.objectId !== undefined) {
-            //cl("post done" + response.objectId);
+          if (response._id !== undefined) {
+            //cl("post done" + response._id);
             return response;
           }
           cl("error - object not saved");
@@ -178,7 +178,7 @@ window.J = (function ($) {
       });
     },
 
-    update: function (table, formId, objectId, callback) {
+    update: function (table, formId, _id, callback) {
       var clicked = false;
       $("#" + formId).unbind("submit").one("submit", function (event) {
         event.preventDefault();
@@ -186,7 +186,7 @@ window.J = (function ($) {
           $("#pleaseWait").show();
           $("#" + formId + " input:submit").attr('disabled', 'disabled');
           var fd = J.prepareForm(formId);
-          J.put(table, objectId, fd).then(function (resp) {
+          J.put(table, _id, fd).then(function (resp) {
             $("#" + formId + " input:submit").removeAttr('disabled');
             $("#pleaseWait").hide();
             callback(resp);
