@@ -341,7 +341,7 @@ window.J = (function ($) {
 
     resetForm: function (formName) {
       $("#" + formName)[0].reset();
-      $(".trumbowyg-editor").html("");
+      $(".trumbowyg-editor, .trumbowyg-textarea").html("");
     },
 
     rebuildForm: function (formId, data) {
